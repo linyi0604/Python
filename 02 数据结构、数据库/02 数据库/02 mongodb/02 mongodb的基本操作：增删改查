@@ -1,0 +1,219 @@
+MongoDB三元素:
+    1 数据库: 和关系型数据库中数据库的层次相同，内部可以有多个集合。
+    2 集合: 相当于关系型数据库中的表，存储若干文档，结构不固定
+    3 文档: 相当于关系型数据库中的行，是Json扩展的Bson类型键值对数据
+    
+    
+MongoDB常用的数据类型:
+    ObjectID:
+        键为_id的数据类型。是文档id，每个文档都有这个属性，默认的主键，保证每个文档唯一
+        可以自己指定_id的值，如果不指定，mongodb会自己维护
+        objectID是一个12字节的十六进制数：
+            前4字节是当前时间戳
+            接下来3字节是机器的ID
+            接下来2字节是mongodb的服务进程id
+            最后3字节是自增量
+    String:
+        字符串，最常用的数据类型，必须你是utf-8类型
+    Boolean:
+        存储布尔值 true或者false
+    Integer:
+        整数类型，可以是32位或64位与操作系统相适应
+    Double:
+        浮点数据类型。
+    Arrays:
+        数组或列表，多个值存到一个键
+    Object:
+        文档的数值类型，用于嵌入式文档
+    Null:
+        存储null值
+    Timestamp:
+        时间戳，表示从1970-1-1至今的秒数
+    Date:
+        时间，存储当前日期或者UNIX时间格式。
+        创建时间类型数据: new Data("YYYY-MM-DD")
+        
+        
+集合命令:
+    创建集合(在使用的库里):
+        db.createCollection(集合名 [,选项] ) //选项是可以省略
+
+        创建一个不限制大小的集合stu:
+            db.createCollection("stu")
+
+        创建一个限制大小的集合stu:
+        db.createCollection("stu", {capped:true,size:10} )
+            //stu为集合的名字
+            //capped 为true表示限制数据总量大小 false不限制，默认为false
+            //size:10 表示最大能存10字节的数据，如果size小于256，都会默认创建256上限
+            //如果存入数据超出容量上限，会淘汰掉最先插入的数据
+
+    查看当前数据库的集合:
+        show collections
+
+    删除集合:
+        db.集合名.drop()
+
+
+
+数据的操作:
+
+1 插入数据:
+    db.集合名.insert(文档)
+
+    不指定_id的话mongodb帮我们维护
+    例如: db.stu.insert({name:"haha",gender:1})
+
+    也可以指定_id
+    例如: db.stu.insert({_id:'20171221',name:"哈哈",gender:1})
+
+2 修改数据:
+    2.1 替换修改:
+        db.集合名.update(
+            <query>,    //条件
+            <update>,    //用该文档替换符合条件的文档来更新
+            {multi:<boolean>}   //可选参数 默认false
+                //multi 为false 表示只更新第一条符合条件的数据
+                //multi 为true  表示所有数据都更新
+        )
+
+        例如:将年龄是18岁的名字改成老马，只修改第一条
+        db.stu.update(
+            {age:18},  //条件，年龄是18岁的数据
+            {name:"老马"} //这个文档会替换符合条件的文档做出更新，其他键值对都会丢失，只留下name
+                    // multi 默认false 代表只更新第一条符合条件的
+                    // {multi:true} 表示所有符合条件的数据都更新
+        )
+
+    2.2 指定键值对修改，不替换: $set:{}
+        例如:全部18岁的学生的名字改成老马，其他键值对不替换
+        db.stu.update(
+            {age:18},   //条件
+            {$set:{name:"老马"}},  //指定键值对修改，不丢失键值对
+            {multi:true}    //所有符合条件的数据都修改
+        )
+
+    2.3 保存(如果文档的_id不存在，则新建一个，如果存在则是进行修改):
+        db.集合名.save(文档)
+            例如:db.stu.save({_id:'20160102','name':'yk',gender:1})
+
+    2.4 删除
+        db.集合名.remove(
+            <query>,    //必填参数，删除条件
+            {justOne:<boolean>} //可选参数
+                    //justOne 默认false，代表删除所有符合条件的文档
+                    //justOne 设为true 代表删除第一条符合条件的文档
+        )
+
+        例如:
+        删除全部文档
+            db.stu.remove({])   //条件是必选参数，全部删除要传入空{}
+        删除年龄为18的学生，只删除一条
+            db.stu.remove({age:18},{justOne:true})
+
+3 数据查询
+    基本查询 find():
+        db.集合名.find({条件})   //查询所有
+        db.集合名.findOne({条件})   //查询一条
+        db.集合名.find({条件}).pretty()  //格式化查询结果
+
+        例如: 查询所有数据
+            db.stu.find({}) //查询所有数据
+            db.stu.find({age:18}).pretty()  //年龄为18的格式化输出
+
+    3.1 比较运算符:
+        等于:   默认等于  没有特殊运算符
+        小于:     $lt      less than
+        小于等于: $lte      less than equal
+        大于:     $gt      greater than
+        大于等于:  $gte     greater than equal
+        不等于:   $ne        not equal
+
+        例如:查询年龄大于18的学生:
+            db.stu.find({age:{$gt:18}})
+    3.2 逻辑运算符:
+        逻辑与: 默认就是与关系
+        逻辑或:$or:[{}]
+
+        例如:查询年龄大于18并且性别为1的学生
+            db.stu.find({ age:{$gt:18} , gender:1} )
+        例如:查询年龄大于18或者性别为0的学生
+            db.stu.find({ $or:[ {age:{$gt:18}},{gender:0} ] })
+
+        逻辑或和逻辑与一起使用:
+            查询年龄大于18或者名字是郭靖，并且性别为1
+            db.stu.find( { $or:[{age:{$gt:18}},{name:"郭靖"}] , gender:1 } )
+
+    3.3 范围运算符:
+        $in:[] 在其中:
+            年龄是18或者28的学生:
+            db.stu.find( { age:{$in:[18,28]} } )
+        $nin:[] 不在其中
+            年龄不是18或者28的学生:
+            db.stu.find( { age:{$nin:[18,28]} } )
+
+    3.4 正则表达式匹配 "/reg /"或regex:"reg" :
+        查询姓黄的学生:
+        db.stu.find( {name: /^黄/ } ) 或者 db.stu.find( {name:{$regex:"^黄"}} )
+
+    3.5 自定义(函数)查询$where
+        mongodb的终端实际上也是js的编译器，利用js匿名函数
+        db.stu.find({
+                $where:js匿名函数{
+                    //必须返回一个bool类型的值 是查询条件
+                    return 条件
+                }
+        })
+
+        例如:查询年龄大于30的学生
+        db.stu.find({
+            $where:function(){
+                return this.age>30;
+            }
+        })
+
+    3.6 limit和skip:
+        db.集合.find().limit(num):只显示查询结果的前num条
+        db.集合.find().skip(num):越过前num条数据从下一条开始显示
+
+        可以联合使用:
+            db.stu.find({}).skip(5).limit(3)
+            // 越过前5条从第6条开始显示3条
+            db.stu.find({}).limit(3).skip(5)
+            //skip和limit挑换顺序执行效果是一样的
+
+    3.7 投影(指定字段显示查询结果):
+        db.集合.find({条件},{ 字段1:1,字段2:1,字段3:0 })
+            //条件后跟一个参数，0代表在查询结果中不显示 1代表显示
+
+        例如:只查看姓名和性别:
+            db.stu.find({},{name:1 , gender:1 })
+            // _id 是默认会显示出来的，如果要不显示_id 需要特殊指定
+            // 投影设为1后 除了_id 其他的参数都是默认显示的
+
+            不显示_id:
+            db.stu.find({},{_id:0,name:1})
+
+    3.8 排序 sort() :
+        db.集合.find().sort({字段1:1,字段2:-1})
+            // 指定字段排序，1代表升序，-1代表降序
+
+        例如:根据年龄升序、性别降序排序
+            db.stu.find({}).sort({age:1,gender:-1})
+
+    3.9 统计个数 count():
+        db.集合.find({条件}).count()
+        或 db.集合.count({条件})
+
+        例如: 统计男生人数
+            db.stu.find({gender:1}).count()
+            或者db.stu.count({gender:1})
+
+        例如: 统计年龄大于18的男生
+            db.stu.count({age:{&gt:18}},gender:1)
+
+    3.10 消除重复 distinct() :
+        db.集合.distinct("字段",{条件})
+
+        例如: 查询年龄大于18的男生来自哪些省份
+            db.stu.distinct("hometown",{age:{&gt:18},gender:1})

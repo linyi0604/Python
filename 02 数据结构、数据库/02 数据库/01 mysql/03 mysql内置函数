@@ -1,0 +1,144 @@
+1 字符串函数
+    查看字符串的ascii码: ascii(str) str为空时候返回0
+    select ascii("a");
+
+    查看ascii码对应的字符: char(num)
+    select char( num );
+
+    拼接字符串 concat(str1 , str2 ...)
+    select concat(12,34,"ab");
+
+    包含字符个数: length(str)
+    select length("abc");
+
+    截取字符串:
+        left(str,len) 截取str左端len个字符
+        right(str,len) 截取str右端len个字符
+        substring(str,pos,len) 截取str,从pos截取len个字符
+
+        select substring("abcd" , 2,3)
+
+    去除空格:
+        ltrim(str) 返回删除了str左侧空格的字符串
+        rtrim(str) 返回删除了str右侧空格的字符串
+        trim(方向 str_del from str) 返回按照方向在str中删除str_del后的字符串
+                    方向： both 两侧、 leading 左、 trailing 右
+        select trim( trailing "x" from "xxaaaaxx")
+
+    返回n个空格的字符串: space(n)
+        select space(10) ;
+
+    替换字符串: replace( str , from , to ) 返回在str中的from替换成to后的字符串
+        select( "aavvcc" , "vv" , "bb" );
+
+    大小写转换: lower(str) upper(str)
+        select lower("ABcDE");
+        select upper("abcDef");
+
+
+2 数字函数
+    求绝对值： abs(num)
+        select abs(-5);
+
+    求余数:mod(m,n)   m%n
+        select mod(m,n);
+        select m % n;
+
+    向下取整数: floor(n)
+        select floor(4.9);
+
+    向上取整: ceiling(n)
+        select ceiling(2.1);
+
+    四舍五入: round(n , d) n表示数，d表示保留小数位数，默认为0
+        select round(1.6);
+
+    x的y次幂: pow(x,y)
+        select pow(5,3);
+
+    获取圆周率: PI()
+        select PI();
+
+    随机数 1到0的浮点数: rand()
+        select rand();
+
+    三角函数:参考文档。
+
+
+3 日期和时间
+    获取整数值:
+        year(date) 返回date的年份数值
+        month(date) 返回date的月份数值
+        day(date) 返回date的日期数值
+        hour(time) 返回time的小时数值
+        minute(time) 返回time的分钟数
+        second(time) 返回time的秒数
+
+        select year("2008-7-15");
+
+    日期计算: date + interval num type;
+        select "2017-6-12" + interval 1 day;
+            -- 查询后一天
+
+        select "2017-6-12" + interval 1 month;
+            -- 查询后一个月
+
+    日期格式化: date_format(date,format)
+        %Y 完整年
+        %y 简写年
+        %m 月
+        %d 日
+        %H 时 24小时制
+        %h 时 12小时制
+        %i 分
+        %s 秒
+
+        select date_format( "2015-11-12","%Y %m %d" )
+
+    当前日期： current_date()
+        select current_date();
+
+    当前时间： current_time()
+        select current_time();
+
+    当前日期时间： now()
+        select now();
+
+4 类型转换
+    cast和convert: cast(value as type)、 convert(value , type)
+        type的种类：
+            binary 二进制
+            char 字符型 可指定长度char(10)
+            date 日期
+            time 时期
+            datetime 日期时间
+            decimal( n , m ) 浮点数 一共m位 小数m位
+            signed 有符号整数
+            unsigned 无符号整数
+
+        select convert("123.78" , signed);
+        select cast("125.83" as signed );
+
+5 流程控制：
+    case语法:
+        case 值 when 条件1 then 结果1 when 条件2 then 结果2 ...... when 条件n then 结果n else 结果
+        键=case when 条件1 then 结果1 when 条件2 then 结果2 ...... when 条件n then 结果n end 结果
+
+        select case 5 when 3 then "three" when 5 then "five" else "haha" end as result;
+
+    if语句: if(条件,结果1,结果2) 如果条件为真 则返回结果1 否则返回结果2
+        select if(1>2,3,4) as result;
+
+    ifnull语句: ifnull( 表达式1 , 表达式2 ) 如果表达式1为空 就返回表达式2,否则返回表达式1
+        select ifnull(gender , "无") as result;
+
+    nullif语句: nullif( 表达式1 , 表达式2 ) 如果表达式1和表达式2相等，则返回null 否则返回表达式1的结果
+        select nullif(1,0);
+
+
+
+6 加密函数
+    md5加密方式占char(32)
+    sha1加密方式占char(40)
+    sha1加密方式: password( word )
+        selelct password( "abc" )

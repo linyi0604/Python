@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<form method="post">
+    <p>{{ form.csrf_token }}</p>
+    <p>作者:{{ form.au_info }}</p>
+    <p>书名:{{ form.bk_info }}</p>
+    <p>{{ form.submit }}</p>
+</form>
+
+
+book:
+<ul>
+    {% for b in books %}
+        <li>{{b}}<a href="/del_book/{{b.id}}">删除</a></li>
+    {% endfor %}
+</ul>
+<br>
+<br>
+authors:
+<ul>
+    {% for a in authors %}
+        <li>{{a}}<a href="/del_author/{{a.id}}">删除</a></li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>

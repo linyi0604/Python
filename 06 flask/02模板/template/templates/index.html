@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask</title>
+</head>
+<body>
+hello world!
+
+<br>
+<p> {{ context }} </p>
+
+姓名:{{ context['name'] }},{{ name }}
+<br>
+年龄:{{ context['age'] }}
+<br>
+num_list:{{ context['num_list'] }}
+<br>
+{% for i in context['num_list'] %}
+    <p>{{ i }}</p>
+{% endfor %}
+
+
+</body>
+</html>

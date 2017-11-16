@@ -1,0 +1,722 @@
+{
+  "count": 18,
+  "start": 0,
+  "subject_collection_items": [
+    {
+      "info": "宋阳/艾伦/马丽/沈腾/喜剧/2017-09-30(中国大陆)",
+      "original_price": null,
+      "release_date": "09.30",
+      "rating": {
+        "count": 119643,
+        "max": 10,
+        "value": 7.4
+      },
+      "description": "",
+      "title": "羞羞的铁拳",
+      "url": "https://m.douban.com/movie/subject/27038183/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2499793218.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 2268,
+        "shape": "rectangle",
+        "height": 3174
+      },
+      "uri": "douban://douban.com/movie/27038183",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "宋阳"
+      ],
+      "actors": [
+        "艾伦",
+        "马丽",
+        "沈腾"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/27038183",
+        "participant_count": 4044,
+        "uri": "douban://douban.com/movie/27038183/forum_topics"
+      },
+      "type": "movie",
+      "id": "27038183"
+    },
+    {
+      "info": "马丁·坎贝尔/成龙/皮尔斯·布鲁斯南/刘涛/动作/惊悚/2017-09-30(中国大陆)",
+      "original_price": null,
+      "release_date": "09.30",
+      "rating": {
+        "count": 35286,
+        "max": 10,
+        "value": 7.3
+      },
+      "description": "",
+      "title": "英伦对决",
+      "url": "https://m.douban.com/movie/subject/25723583/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2499135561.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1200,
+        "shape": "rectangle",
+        "height": 1875
+      },
+      "uri": "douban://douban.com/movie/25723583",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "马丁·坎贝尔"
+      ],
+      "actors": [
+        "成龙",
+        "皮尔斯·布鲁斯南",
+        "刘涛"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/25723583",
+        "participant_count": 2007,
+        "uri": "douban://douban.com/movie/25723583/forum_topics"
+      },
+      "type": "movie",
+      "id": "25723583"
+    },
+    {
+      "info": "王晶/甄子丹/刘德华/姜皓文/动作/犯罪/2017-09-30(中国大陆)",
+      "original_price": null,
+      "release_date": "09.30",
+      "rating": {
+        "count": 35373,
+        "max": 10,
+        "value": 7.6
+      },
+      "description": "",
+      "title": "追龙",
+      "url": "https://m.douban.com/movie/subject/26425068/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2499052494.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 679,
+        "shape": "rectangle",
+        "height": 950
+      },
+      "uri": "douban://douban.com/movie/26425068",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "王晶"
+      ],
+      "actors": [
+        "甄子丹",
+        "刘德华",
+        "姜皓文"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/26425068",
+        "participant_count": 1642,
+        "uri": "douban://douban.com/movie/26425068/forum_topics"
+      },
+      "type": "movie",
+      "id": "26425068"
+    },
+    {
+      "info": "大鹏/大鹏/乔杉/古力娜扎/喜剧/音乐/2017-09-29(中国大陆)",
+      "original_price": null,
+      "release_date": "09.29",
+      "rating": {
+        "count": 31306,
+        "max": 10,
+        "value": 6.9
+      },
+      "description": "",
+      "title": "缝纫机乐队",
+      "url": "https://m.douban.com/movie/subject/26926321/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2498558511.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1500,
+        "shape": "rectangle",
+        "height": 2100
+      },
+      "uri": "douban://douban.com/movie/26926321",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "大鹏"
+      ],
+      "actors": [
+        "大鹏",
+        "乔杉",
+        "古力娜扎"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/26926321",
+        "participant_count": 1999,
+        "uri": "douban://douban.com/movie/26926321/forum_topics"
+      },
+      "type": "movie",
+      "id": "26926321"
+    },
+    {
+      "info": "李晨/李晨/范冰冰/王千源/剧情/动作/战争/2017-09-29(中国大陆)",
+      "original_price": null,
+      "release_date": "09.29",
+      "rating": {
+        "count": 23073,
+        "max": 10,
+        "value": 4.8
+      },
+      "description": "",
+      "title": "空天猎",
+      "url": "https://m.douban.com/movie/subject/26753020/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2499163778.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1286,
+        "shape": "rectangle",
+        "height": 1800
+      },
+      "uri": "douban://douban.com/movie/26753020",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "李晨"
+      ],
+      "actors": [
+        "李晨",
+        "范冰冰",
+        "王千源"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/26753020",
+        "participant_count": 3552,
+        "uri": "douban://douban.com/movie/26753020/forum_topics"
+      },
+      "type": "movie",
+      "id": "26753020"
+    },
+    {
+      "info": "奥里奥尔·保罗/马里奥·卡萨斯/阿娜·瓦格纳/何塞·科罗纳多/犯罪/悬疑/惊悚/2017-09-15(中国大陆)",
+      "original_price": null,
+      "release_date": "09.15",
+      "rating": {
+        "count": 225235,
+        "max": 10,
+        "value": 8.7
+      },
+      "description": "",
+      "title": "看不见的客人",
+      "url": "https://m.douban.com/movie/subject/26580232/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2498971355.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 5906,
+        "shape": "rectangle",
+        "height": 8425
+      },
+      "uri": "douban://douban.com/movie/26580232",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "奥里奥尔·保罗"
+      ],
+      "actors": [
+        "马里奥·卡萨斯",
+        "阿娜·瓦格纳",
+        "何塞·科罗纳多"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/26580232",
+        "participant_count": 6267,
+        "uri": "douban://douban.com/movie/26580232/forum_topics"
+      },
+      "type": "movie",
+      "id": "26580232"
+    },
+    {
+      "info": "马特·里夫斯/安迪·瑟金斯/伍迪·哈里森/史蒂夫·茨恩/剧情/动作/科幻/2017-09-15(中国大陆)",
+      "original_price": null,
+      "release_date": "09.15",
+      "rating": {
+        "count": 76053,
+        "max": 10,
+        "value": 7
+      },
+      "description": "",
+      "title": "猩球崛起3：终极之战",
+      "url": "https://m.douban.com/movie/subject/25808075/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2494093630.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1000,
+        "shape": "rectangle",
+        "height": 1503
+      },
+      "uri": "douban://douban.com/movie/25808075",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "马特·里夫斯"
+      ],
+      "actors": [
+        "安迪·瑟金斯",
+        "伍迪·哈里森",
+        "史蒂夫·茨恩"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/25808075",
+        "participant_count": 2655,
+        "uri": "douban://douban.com/movie/25808075/forum_topics"
+      },
+      "type": "movie",
+      "id": "25808075"
+    },
+    {
+      "info": "李炼/李正翔/洪海天/陶典/动画/2017-10-01(中国大陆)",
+      "original_price": null,
+      "release_date": "10.01",
+      "rating": {
+        "count": 713,
+        "max": 10,
+        "value": 6.4
+      },
+      "description": "",
+      "title": "昆塔：反转星球",
+      "url": "https://m.douban.com/movie/subject/26381326/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2499708853.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1474,
+        "shape": "rectangle",
+        "height": 2041
+      },
+      "uri": "douban://douban.com/movie/26381326",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "李炼"
+      ],
+      "actors": [
+        "李正翔",
+        "洪海天",
+        "陶典"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": null,
+      "type": "movie",
+      "id": "26381326"
+    },
+    {
+      "info": "韩天/卜冠今/刘畅/李梦/剧情/爱情/2017-10-05(中国大陆)",
+      "original_price": null,
+      "release_date": "10.05",
+      "rating": {
+        "count": 1816,
+        "max": 10,
+        "value": 6.5
+      },
+      "description": "",
+      "title": "那一场呼啸而过的青春",
+      "url": "https://m.douban.com/movie/subject/27056299/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2499365735.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 914,
+        "shape": "rectangle",
+        "height": 1280
+      },
+      "uri": "douban://douban.com/movie/27056299",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "韩天"
+      ],
+      "actors": [
+        "卜冠今",
+        "刘畅",
+        "李梦"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": null,
+      "type": "movie",
+      "id": "27056299"
+    },
+    {
+      "info": "王巍/侯勇/大张伟/金晨/动作/科幻/动画/2017-10-01(中国大陆)",
+      "original_price": null,
+      "release_date": "10.01",
+      "rating": {
+        "count": 2395,
+        "max": 10,
+        "value": 3.2
+      },
+      "description": "",
+      "title": "钢铁飞龙之再见奥特曼",
+      "url": "https://m.douban.com/movie/subject/27045442/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2500046429.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1429,
+        "shape": "rectangle",
+        "height": 2000
+      },
+      "uri": "douban://douban.com/movie/27045442",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "王巍"
+      ],
+      "actors": [
+        "侯勇",
+        "大张伟",
+        "金晨"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/27045442",
+        "participant_count": 385,
+        "uri": "douban://douban.com/movie/27045442/forum_topics"
+      },
+      "type": "movie",
+      "id": "27045442"
+    },
+    {
+      "info": "大卫·斯特登/马克·莫拉根/大卫·拜德拉/奥利维娅·科尔曼/儿童/动画/2017-09-22(中国大陆)",
+      "original_price": null,
+      "release_date": "09.22",
+      "rating": {
+        "count": 368,
+        "max": 10,
+        "value": 6.5
+      },
+      "description": "",
+      "title": "托马斯大电影之了不起的比赛",
+      "url": "https://m.douban.com/movie/subject/26830596/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2498544136.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1000,
+        "shape": "rectangle",
+        "height": 1363
+      },
+      "uri": "douban://douban.com/movie/26830596",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "大卫·斯特登"
+      ],
+      "actors": [
+        "马克·莫拉根",
+        "大卫·拜德拉",
+        "奥利维娅·科尔曼"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": null,
+      "type": "movie",
+      "id": "26830596"
+    },
+    {
+      "info": "吴京/吴京/弗兰克·格里罗/吴刚/动作/2017-07-27(中国大陆)",
+      "original_price": null,
+      "release_date": "07.27",
+      "rating": {
+        "count": 387888,
+        "max": 10,
+        "value": 7.4
+      },
+      "description": "",
+      "title": "战狼2",
+      "url": "https://m.douban.com/movie/subject/26363254/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2485983612.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 750,
+        "shape": "rectangle",
+        "height": 1134
+      },
+      "uri": "douban://douban.com/movie/26363254",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "吴京"
+      ],
+      "actors": [
+        "吴京",
+        "弗兰克·格里罗",
+        "吴刚"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/26363254",
+        "participant_count": 12738,
+        "uri": "douban://douban.com/movie/26363254/forum_topics"
+      },
+      "type": "movie",
+      "id": "26363254"
+    },
+    {
+      "info": "查尔斯·马丁/奥兰多·布鲁姆/吴磊/任达华/动作/犯罪/冒险/2017-09-30(中国大陆)",
+      "original_price": null,
+      "release_date": "09.30",
+      "rating": {
+        "count": 2644,
+        "max": 10,
+        "value": 3.5
+      },
+      "description": "",
+      "title": "极致追击",
+      "url": "https://m.douban.com/movie/subject/26426099/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2498781930.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 700,
+        "shape": "rectangle",
+        "height": 980
+      },
+      "uri": "douban://douban.com/movie/26426099",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "查尔斯·马丁"
+      ],
+      "actors": [
+        "奥兰多·布鲁姆",
+        "吴磊",
+        "任达华"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": null,
+      "type": "movie",
+      "id": "26426099"
+    },
+    {
+      "info": "帕特里克·休斯/瑞恩·雷诺兹/塞缪尔·杰克逊/加里·奥德曼/喜剧/动作/犯罪/2017-09-22(中国大陆)",
+      "original_price": null,
+      "release_date": "09.22",
+      "rating": {
+        "count": 41907,
+        "max": 10,
+        "value": 7.3
+      },
+      "description": "",
+      "title": "王牌保镖",
+      "url": "https://m.douban.com/movie/subject/22266126/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2498055621.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 4000,
+        "shape": "rectangle",
+        "height": 5677
+      },
+      "uri": "douban://douban.com/movie/22266126",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "帕特里克·休斯"
+      ],
+      "actors": [
+        "瑞恩·雷诺兹",
+        "塞缪尔·杰克逊",
+        "加里·奥德曼"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": null,
+      "type": "movie",
+      "id": "22266126"
+    },
+    {
+      "info": "纳塔吾·彭皮里亚/茱蒂蒙·琼查容苏因/查侬·散顶腾古/依莎亚·贺苏汪/剧情/犯罪/悬疑/2017-10-13(中国大陆)",
+      "original_price": null,
+      "release_date": "10.13",
+      "rating": {
+        "count": 1685,
+        "max": 10,
+        "value": 8.4
+      },
+      "description": "",
+      "title": "天才枪手",
+      "url": "https://m.douban.com/movie/subject/27024903/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2500487637.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1071,
+        "shape": "rectangle",
+        "height": 1500
+      },
+      "uri": "douban://douban.com/movie/27024903",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "纳塔吾·彭皮里亚"
+      ],
+      "actors": [
+        "茱蒂蒙·琼查容苏因",
+        "查侬·散顶腾古",
+        "依莎亚·贺苏汪"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": {
+        "id": "movie/27024903",
+        "participant_count": 239,
+        "uri": "douban://douban.com/movie/27024903/forum_topics"
+      },
+      "type": "movie",
+      "id": "27024903"
+    },
+    {
+      "info": "廖希/白恩/吕星辰/赫子铭/剧情/历史/战争/2017-09-22(中国大陆)",
+      "original_price": null,
+      "release_date": "09.22",
+      "rating": {
+        "count": 2110,
+        "max": 10,
+        "value": 7.8
+      },
+      "description": "",
+      "title": "捍卫者",
+      "url": "https://m.douban.com/movie/subject/27063335/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2498542692.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 2693,
+        "shape": "rectangle",
+        "height": 3809
+      },
+      "uri": "douban://douban.com/movie/27063335",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "廖希"
+      ],
+      "actors": [
+        "白恩",
+        "吕星辰",
+        "赫子铭"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": null,
+      "type": "movie",
+      "id": "27063335"
+    },
+    {
+      "info": "李巨源/王丽坤/高以翔/李媛/喜剧/爱情/2017-10-13(中国大陆)",
+      "original_price": null,
+      "release_date": "10.13",
+      "rating": null,
+      "description": "",
+      "title": "情遇曼哈顿",
+      "url": "https://m.douban.com/movie/subject/26818312/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2500046039.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 642,
+        "shape": "rectangle",
+        "height": 900
+      },
+      "uri": "douban://douban.com/movie/26818312",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "李巨源"
+      ],
+      "actors": [
+        "王丽坤",
+        "高以翔",
+        "李媛"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": null,
+      "type": "movie",
+      "id": "26818312"
+    },
+    {
+      "info": "迈克尔·艾普特/劳米·拉佩斯/托妮·科莱特/奥兰多·布鲁姆/动作/悬疑/惊悚/2017-09-22(中国大陆)",
+      "original_price": null,
+      "release_date": "09.22",
+      "rating": {
+        "count": 2324,
+        "max": 10,
+        "value": 5.8
+      },
+      "description": "",
+      "title": "惊天解密",
+      "url": "https://m.douban.com/movie/subject/22266475/",
+      "price": null,
+      "cover": {
+        "url": "https://qnmob2.doubanio.com/view/movie_poster_cover/lpst/public/p2499413364.jpg?imageView2/0/q/80/w/9999/h/400/format/jpg",
+        "width": 1122,
+        "shape": "rectangle",
+        "height": 1600
+      },
+      "uri": "douban://douban.com/movie/22266475",
+      "actions": [],
+      "label": null,
+      "subtype": "",
+      "directors": [
+        "迈克尔·艾普特"
+      ],
+      "actors": [
+        "劳米·拉佩斯",
+        "托妮·科莱特",
+        "奥兰多·布鲁姆"
+      ],
+      "date": null,
+      "reviewer_name": "",
+      "forum_info": null,
+      "type": "movie",
+      "id": "22266475"
+    }
+  ],
+  "total": 49,
+  "subject_collection": {
+    "subject_count": 49,
+    "description": "",
+    "url": "https://m.douban.com/app_topic/movie_showing",
+    "uri": "douban://douban.com/subject_collection/movie_showing",
+    "cover_url": "",
+    "name": "影院热映",
+    "id": "movie_showing",
+    "display": {
+      "layout": "grid"
+    },
+    "sharing_url": "https://www.douban.com/doubanapp/dispatch?uri=/subject_collection/movie_showing/"
+  }
+}

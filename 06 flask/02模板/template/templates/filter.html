@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flask filter</title>
+</head>
+<body>
+{{ str }}
+<br>
+{{ str | upper }}
+<br>
+{{ str | lower }}
+<br>
+{{ str | capitalize }}
+<br>
+{{ str | title }}
+<br>
+{{ str | reverse }}
+<br>
+列表操作：
+<br>
+{{ li }}
+<br>
+{{ li | length }}
+<br>
+{{ li | first }}
+<br>
+{{ li|last }}
+<br>
+{{ li | sort }}
+
+<br>
+块过滤：
+{% filter upper %}
+    hello worldQ!
+{% endfilter %}
+<br>
+
+自定义过滤器：
+<br>
+{{ li | hahah }}
+<br>
+{{ li | heihei }}
+
+
+</body>
+</html>

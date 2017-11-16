@@ -1,0 +1,124 @@
+在linux环境安装mongoDB:
+    一般认为偶数版本为稳定版 如 1.6.x，奇数版本为开发版如1.7.x
+    32bit的mongoDB最大能存放2g的数据，64bit没有限制
+
+    方法1：
+    终端执行:
+        安装服务器: sudo apt install mongodb-server
+        安装客户端: sudo apt install mongodb-clients
+
+    方法2:
+        1 官网下载合适版本
+        2 解压:   tar -zxvf 安装压缩包 ./mongodb
+        3 到/user/local/目录下:  rm mongodb /user/local/mongodb
+        4 添加可执行文件到path路径: export PATH=/usr/local/mongodb/bin:$PATH
+
+
+
+
+MongoDB:
+    MongoDB是一中非关系型数据库(NoSql)。
+    NoSql的特性:
+    易扩展: NoSQL有很多种，有一个共同特点就是去掉关系数据库的关系特性，数据之间无关系，易于扩展。
+    高性能: 在大数据量下，有很优秀的读写性能，因为数据库的结构简单。
+    灵活性:无须事先建立字段、表。如果数据量非常大，字段非常多，建表很苦难。
+    高可用: 在不太影响性能的情况，可以方便的实现高可用的架构。
+
+
+MongoDB三元素:
+    1 数据库: 和关系型数据库中数据库的层次相同，内部可以有多个集合。
+    2 集合: 相当于关系型数据库中的表，存储若干文档，结构不固定
+    3 文档: 相当于关系型数据库中的行，是Json扩展的Bson类型键值对数据
+
+
+
+服务器:
+    启动服务器:  sudo service mongod start
+    停止服务器:  sudo service mongod stop
+    重启服务器:  sudo service mongod restart
+
+    有些linux系统是 sudo service mongodb start/stop/restart
+
+
+客户端:
+    连接服务器:
+        mongo
+    查看参数:
+        mongo --help
+    退出mongo服务:
+        exit 或 ctr + c
+    查看当前使用数据库(登录后默认使用test数据库):
+        db
+    查看所有数据库(物理真实创建出来的数据库):
+        show dbs
+    切换数据库(use不存在的库会在内存中临时建库,之后创建集合文件会自动在物理上创建这个数据库):
+        use 库名
+    删除当前使用的数据库(如果数据库不存在就什么也不做):
+        db.dropDatabase()
+
+备份:(不登录mongodb，在终端上操作)
+    mongodump -h 主机ip:端口 -d 数据库名 -o 备份到目录
+    -h 服务器地址，如果是本地localhost可以省略，如果端口是默认也可以省略
+    -d 要备份的数据库名
+    -o 要备份到的目录
+恢复:(不登录mongodb，在终端上操作)
+    mongorestore -h 主机ip:端口 -d 恢复后的数据库名 --dir 恢复源文件目录
+    -h 服务器地址
+    -d 恢复后的数据库名
+    --dir 恢复源文件的目录
+
+
+账户管理(建议不要开启认证，否则会非常麻烦):
+
+    常用的的系统角色有:
+        root: 只在 admin 数据中可使用,超级账户,超级权限
+        Read: 允许用户读取指定的数据库
+        readWrite: 允许用户读写指定的数据库
+
+    创建超级用户:
+        use admin
+        db.createUser(
+            {
+               user: 'admin',
+               pwd: '123',
+               roles:[{role:'root',db:'admin'}]
+            }
+        )
+
+
+    启用安全认证:
+        1 修改配置文件:
+            sudo vi /etc/mongod.conf
+            在文件中找到security: authorization disabled
+            把disabled 改成 enabled
+        2 重启服务
+            sudo service mongod restart
+            有些系统是:sudo service mongodb restart
+        3 认证登录:
+            mongo -u admin -p 123 --authenticationDatabase admin
+
+
+    创建普通用户:(指定数据库和权限)
+        db.createUser(
+            {
+               user: 'demouser',
+               pwd: '123',
+               roles:[{role:'readWrite',db:'demo'}]
+            }
+        )
+
+
+    查看数据库的用户:
+        show users
+
+
+    启用安全认证后普通用户登录:
+        mongo -u 用户名 -p 密码 --authenticationDatabase 数据库
+
+    修改密码：
+        db.updateUser("用户名",{pwd:"新密码"})
+
+    修改属性：
+        db.updateUser('用户名',{roles:[{role: '权限',db:'数据库'}]})
+
+

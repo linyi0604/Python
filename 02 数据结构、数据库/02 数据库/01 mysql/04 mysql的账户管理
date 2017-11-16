@@ -1,0 +1,62 @@
+mysql中账户管理：
+
+1 查看所有用户：
+    所有用户及权限信息都存储在mysql数据库中的user表中
+    查看user表的结构
+    desc user\G;
+
+    主要字段：
+        host: 表示允许访问的主机
+        user: 表示用户名
+        authentication_string: 加密后的密码
+    查看所有用户:
+    select host,user,authentication_string from user;
+
+2 创建账户和授予权限：
+    需要使用账户登录后操作 例如使用root
+    常用权限：create alter drop insert update delete select
+    分配所有权限：all privileges
+
+    创建账户并授予权限：grant 权限列表 on 数据库 to "用户名"@"访问主机" identified by "密码";
+
+    举例:
+    1 登录root: mysql -u root -p
+    2 grant all privileges on python.* "py"@"%" identified by "123";
+        -- python数据库下所有表 拥有所有权限
+        -- 用户名py, %表示可以使用任意ip登录
+        -- 123为密码
+    3 退出root: quit;
+    4 登录py: mysql -u py -p
+
+3 授权： grant 权限 on 数据库 to 账户1,账户2...  with grant option;
+
+
+4 查看某一个用户有哪些权限： show grants for 用户名;
+
+5 回收权限: 用root登录后操作
+    撤销某用户的某权限: revoke 权限列表 on 数据库名.* from "用户名"@"主机";
+
+6 修改密码:
+    方法1 不登录，在终端中: mysqladmin -u 用户名 -p password "新密码"
+    方法2 使用root登录，修改mysql数据库中user表
+        使用password()函数进行加密存入数据库
+        修改数据库之后要刷新权限才有效
+
+        在root登录状态下:
+            改user表：
+                update user set authentication_string = password("新密码") where user = "用户名";
+            刷新权限：
+                flush privileges;
+
+7 删除账户：
+    方法1 使用root登录后:
+        drop user "用户名"@"主机";
+
+    方法2 使用root登录删除mysql库的user表中数据
+        delete from user where user = "用户名";
+        操作后必须刷新权限: flush privileges
+
+    推荐使用方法1，如果主机的字母大写时候，方法1会无效，再使用方法2。
+
+
+

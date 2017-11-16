@@ -1,0 +1,263 @@
+redis的常用数据操作:
+    redis是key-value的数据结构，每条数据都是一个键值对。
+    键的类型是字符串并且键不能重复。
+
+    值的类型分为五种：
+        1 字符串string
+        2 哈希hash
+        3 列表list
+        4 集合set
+        5 有序集合zset
+
+string类型命令：
+    1 增加、修改: 如果设置的键不存在则添加，如果存在则修改
+        1.1 设置键值
+            set key value
+
+            例如: 添加键py1 值为gj
+            set "py1" "gj"
+
+        1.2 设置键值及过期时间：以秒为单位，过期后数据自动删除
+            setex key seconds value
+
+            例如:设置键py2 的值为hr 3秒后过期
+            setex "py2" 3 "hr"
+
+        1.3 设置多个键值：
+            mset key1 value1 key2 value2 ....
+
+            例如:设置键py3值为dx 键py4值为xd 键py5值为nd 键py6值为bg
+            mset "py3" "dx" "py4" "xd" "py5" "nd" "py6" "bg"
+
+        1.4 追加值: 在值后追加字符串
+            append key value
+
+            例如：向键py1 追加haha
+            append "py1" "haha"
+
+    2 获取:
+        2.1 根据键获取值，如果不存在返回null
+            get key
+
+            例如：获取py1的值
+            get "py1"
+
+        2.2 根据多个键，获取多个值
+            mget key1 key2 key3 ...
+
+            例如：获取py3 py4 py5 py6 的值
+            mget "py3" "py4" "py5" "py6"
+
+    3 删除：删除键的时候会删除值
+        del key1 key2 key3 ...
+
+键命令:
+    1 查找键，参数通配符查找
+      keys patern
+
+      例如：查看所有的键
+      keys *
+      例如：查看所有包含a的键
+      keys "*a*"
+
+    2 判断键是否存在，存在返回1 否则返回0
+      exists key
+
+      例如： 判断py1键是否存在
+      exists "py1"
+
+    3 查看键对应的value的类型
+      type key
+
+      例如：查看py1的值的类型
+      type "py1"
+
+    4 删除键对应的值
+      del key1 key2 ....
+
+      例如：删除键'py3'、'py4'、'py5'、'py6'
+      del 'py3' 'py4' 'py5' 'py6'
+
+    5 设置过期时间，以秒为单位。如果没有指定过期时间，则一直存在，直到使用del移除
+      expire key seconds
+
+      例如：设置py1的过期时间为10秒
+      expire "py1" 10
+
+    6 查看有效时间 秒为单位，已经失效则返回-2
+      ttl key
+
+      例如：查看py2的有效时间
+      ttl py2
+
+hash类型命令:
+    hash用于存储对象，对象结构为属性、值。即 键值对中值是属性、值的组合。值的类型是string
+    1 增加、修改
+        1.1 设置单个属性
+            hset key field value
+
+            例如：设置py2的属性name为hr
+            hset "py2" name hr
+
+        1.2 设置多个属性
+            hmset key field1 value1 field2 value2 ...
+
+            例如：设置py3的属性name为dx 属性gender为1 属性birthday为2017-1-1
+            hmset py3 name dx gender 1 birthday 2017-1-1
+    2 获取
+        2.1 获取指定键的所有属性
+            hkeys key
+
+            例如：获取py3的所有属性
+            hkeys py3
+
+        2.2 获取一个属性的值
+            hget key field
+
+            例如：获取py2属性name的值
+            hget py2 name
+
+        2.3 获取多个属性值
+            hmget key field1 field2 ....
+
+            例如:获取py3属性name gender 和birthday
+            hmget py3 name gender birthday
+
+        2.4 获取所有属性
+            hvals key
+
+            例如：获取py3的所有属性的值
+            hvals py3
+
+    3 删除:
+        3.1 删除整个hash键值使用del命令
+            del key
+        3.2 删除属性
+            hdel key field1 field2...
+
+            例如：删除py3的属性gender birthday
+            hdel py3 gender birthday
+
+list类型命令：
+    列表的元素类型为string
+    按照插入顺序排序
+
+    1 增加
+        1.1 在左侧插入数据
+            lpush key value1 value2 ...
+
+            例如：从键py11的左侧插入数据dx xd
+            lpush py11 dx xd
+
+        1.2 在右侧插入数据
+            rpush key value1 value2 ...
+
+            例如：从py11右侧插入nd bg
+            rpush py11 nd bg
+
+        1.3 在指定元素的前或后插入新元素
+            linsert key before/after 现有元素 新元素
+
+            例如：在py11的列表中nd前加入zbt
+            linsert py11 before nd zbt
+
+    2 获取
+        2.1 返回列表里指定范围元素：
+            start、stop为元素的下表索引
+            索引从左侧开始第一个元素为0
+            索引可以使负数，从尾部开始，-1代表最后一个元素
+            lrange key start stop
+
+            例如:获取py11的列表所有元素
+            lrange py11 0 -1
+
+    3 删除
+        3.1 删除指定元素:
+            将表中前count次出现的值为value的元素全都移除
+            count>0从头开始往尾移除
+            count<0从尾开始向头移除
+            count=0移除所有
+            lrem key count value
+
+            例如：向列表'py12'中加入元素'h0'、'h1'、'h2'、'h0'、'h1'、'h3'、'h0'、'h1'
+            rpush list3 'h0' 'h1' 'h2' 'h0' 'h1' 'h3' 'h0' 'h1'
+            从'py12'列表右侧开始删除2个'h0'
+            lrem py12 -2 h0
+            查看列表'py12'的所有元素
+            lrange 'py12' 0 -1
+
+set类型命令：
+    无序集合，元素为string类型，元素唯一。
+    对于集合没有修改操作。
+
+    1 增加 添加元素
+      sadd key member1 member2 ...
+
+      例如：向py21的集合里添加元素 yg xin yzp
+      sadd py21 yg xin yzp
+
+    2 获取 返回所有的元素
+      smembers key
+
+      例如：获取py21的所有元素
+      smembers py21
+
+    3 删除 删除指定元素
+      srem key member
+
+      例如：删除py21中的yzp
+      srem py21 yzp
+
+
+zset类型命令：
+    sorted set 有序集合，元素为string，元素唯一
+    每个元素有一个double类型的score，表示权重，zset内元素会按照权重从小到大排序
+    zset没有修改操作
+
+    1 增加
+      zadd key score1 member1 score2 member2 ...
+
+      例如：向py31集合中添加gj hr yg xin 权重分别是1 5 8 3
+      zadd py31 1 gj 5 hr 8 yg 3 xin
+
+    2 获取
+        2.1 返回指定范围内的元素
+            start stop为元素下标，左边第一个为0，右边第一个为-1
+            zrange key start stop
+
+            例如：获取py31的所有元素
+            zrange py31 0 -1
+
+        2.2 返回score值在min和max之间的成员
+            zrangebyscore key min max
+
+            例如：返回py31集合中权值在4到9之间的数据
+            zrangebyscore py31 4 9
+
+        2.3 返回成员member的score值
+            zscore key member
+
+            例如查看py31中yg的权值
+            zscore py31 yg
+
+    3 删除:
+        3.1 删除指定元素
+            zrem key member1 member2 ...
+
+            例如：删除py31中的yg
+            zrem py31 yg
+
+        3.2 删除权重在指定范围内的元素
+            zremrangebyscore key min max
+
+            例如：删除py31中权值在4到9之间的元素
+            zremrangebyscore py31 4 9
+
+
+
+
+
+
+
+
+

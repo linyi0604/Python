@@ -1,0 +1,324 @@
+11 简述数据库中的事务特性？并对其应用场景举例(10分)
+
+数据库中事务有四大特性：
+
+原子性：一个事务流程中多个sql操作是一个原子操作，要么全部都执行，要么全都不执行。不可以其中某些操作执行一些没执行。
+一致性：几个并行执行的事务的结果，必须与按某一个执行顺序串行执行的结果相一致。
+隔离性：多个事务之间的执行，不会互相干扰，事务执行的中间结果对其他事务必须是透明的
+持久性：提交事务之后，对数据库的改变是持久的，不会丢失的。即使发生故障，也不会丢失。
+
+应用场景：
+	比如银行转账的业务，A向B转账1000元钱。这个过程分成两步：
+	1 在数据库中 A的总金额减少1000元钱
+	2 在数据库中 B的总金额增加1000元钱
+
+	这两个过程在微观上是无法同时进行的，一定是按照顺序的。
+	但是，如果1步骤刚执行完，2还没有执行的时候，发生了事故，比如停电了，断网了，等等这就会发生一个情况，A的金额减少了1000元，但是B的金额没有增加1000元。对于这两个人，相当于凭空丢失了1000元。
+
+	为了防止这样的事情发生，引入事务的操作，我们把两项数据库操作封装成一个事务过程，分别执行两个操作之后，提起提交对数据库的全部影响。这样，要么提交完成后，两个步骤全都执行了，要么提交失败了，可以回滚事务，两个操作都没有发生过。
+
+
+
+
+12 列举SQL数据库中的DDL，DCL，DML，DQL语句关键字，分别用任一关键词示例(10分)
+
+DDL delete
+DML grant
+DCL create
+DQL select
+
+
+13 已知有三个数据库mysql,mongodb和redis，已经分别存储了不同的学生信息，数据全部采用字符串类型，只有id和name两个字段(在mongo和redis中键为id,值为name)，现需编写代码实现需求：根据指定id获取对应的name和存储该条信息的数据库名称 (30分)
+from pymysql import *
+from pymongo import *
+from redis import *
+
+#在redis中查找
+def query_in_redis(id):
+	try:
+		# 创建连接	此处如果数据库是本机 并且端口为默认，可以省略参数
+		sr = StrictRedis( )
+		res = sr.get(id)
+
+		# 如果查到了信息 res后追加数据库名称
+		if res is not none:
+			res = (res,  "数据由redis提供" )
+
+		#如果没查到信息 res赋值为False
+		else :
+			res = False
+
+		sr.close()
+		return res
+
+	except Exception as e:
+		return False;
+
+#在mongodb中查找
+def query_in_mongodb(id):
+	try:
+		#创建连接 如果是本地localhost 端口为默认 可以省略参数
+		conn = MongoClient
+		# 数据库名称应该由题提供，这里假设是python数据库
+		db = conn.python
+		# 进行搜索 表应该由题目给出 这里假设是 stu表
+		res = db.stu.find_one({"id": id })
+		# 如果有查询结果 就追加提示数据库信息
+		if res is not None:
+			res = ( res, "数据由mongodb提供" )
+		# 否则没找到 res赋值为False
+		else:
+			res = False
+
+		conn.close()
+		return res
+
+	except Exception:
+		return False
+
+
+# 在mysql中查找
+def query_in_mysql(id):
+	try:
+		# 创建连接对象，这里数据库假设是python
+		conn = connect(host="localhost",port=3306,user="root",password="mysql",database="python")
+		cur = conn.cursor()
+
+		# 执行查询 假设表名是stu
+		params = [id ]
+		sql = "select name from stu where id = %s" ;
+		count = cur.execute( sql , params )
+		res = cur.fetchone()
+
+		# 如果查到数据了
+		if count > 0 :
+			res = (res , "数据由mysql提供")
+		else :
+			res = False
+
+		cur.close()
+		conn.close()
+		return res
+
+	except Exception as e:
+		return False
+
+
+def do_query( id ):
+	# 首先去redis查询
+	res = query_in_redis(id)
+	# 如果在redis中找到了，就打印结果，返回
+	if res is not false:
+		print(res)
+		return
+
+	# redis中没找到，再去mongodb中找
+	res = query_in_mongodb(id)
+	# 如果在mongodb中找到了 打印结果并，就返回
+	if res is not false:
+		print(res)
+		return
+	# mongod中也没找到 去mysql找
+	res = query_in_mysql(id)
+	# 如果在mysql中找到了，就打印结果 返回
+	if res is not false:
+		print(res)
+		return
+	# 如果都没有找到 给出提示信息 结束
+	print("三个数据库中都没有找到")
+
+
+
+if __name__ == "__main__":
+	id = int( input("请输入要查询的id编号:") )
+	do_query( di )
+
+
+
+
+
+
+
+
+
+
+
+
+
+14 .#1. 在MySQL中分别创建表dept和employee，结构如下：
+dept
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| d_no       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| d_name    | varchar(50)  | YES  |     | NULL    |                |
+| d_location  | varchar(100) | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+
+employee
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null  | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| e_no     | int(11)       | NO   | PRI | NULL    |       |
+| e_name   | varchar(100) | NO   |     | NULL    |       |
+| e_gender | char(2)       | NO   |     | NULL    |       |
+| dept_no  | int(11)       | NO   | MUL | NULL    |       |
+| e_job    | varchar(100)  | NO   |     | NULL    |       |
+| e_salary | smallint(6)     | NO   |     | NULL    |       |
+| hireDate | date         | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+#2. 在employee表中插入如下数据：
+    -> (1001, 'SMITH', 'm',20, 'CLERK',800,'2005-11-12'),
+    -> (1002, 'ALLEN', 'f',30, 'SALESMAN', 1600,'2003-05-12'),
+    -> (1003, 'WARD', 'f',30, 'SALESMAN', 1250,'2003-05-12'),
+    -> (1004, 'JONES', 'm',20, 'MANAGER', 2975,'1998-05-18'),
+    -> (1005, 'MARTIN', 'm',30, 'SALESMAN', 1250,'2001-06-12'),
+    -> (1006, 'BLAKE', 'f',30, 'MANAGER', 2850,'1997-02-15'),
+    -> (1007, 'CLARK', 'm',10, 'MANAGER', 2450,'2002-09-12'),
+    -> (1008, 'SCOTT', 'm',20, 'ANALYST', 3000,'2003-05-12'),
+    -> (1009, 'KING', 'f',10, 'PRESIDENT', 5000,'1995-01-01'),
+    -> (1010, 'TURNER', 'f',30, 'SALESMAN', 1500,'1997-10-12'),
+    -> (1011, 'ADAMS', 'm',20, 'CLERK', 1100,'1999-10-05'),
+-> (1012, 'JAMES', 'm',30, 'CLERK', 950,'2008-06-15');
+在dept表中插入如下数据：
+    -> (10, 'ACCOUNTING', 'ShangHai'),
+    -> (20, 'RESEARCH ', 'BeiJing '),
+    -> (30, 'SALES ', 'ShenZhen '),
+    -> (40, 'OPERATIONS ', 'FuJian ');
+#3. 在employee表中，查询每个部门最高工资的员工信息。
+#4. 查询员工BLAKE所在部门和部门所在地。
+#5. 使用连接查询，查询所有员工的部门和部门信息。
+#6. 在employee表中，计算不同部门的平均工资。
+#7. 在employee表中，查询员工姓名以字母’A’或’S’开头的员工的信息。
+#8. 在employee表中，将查询记录先按部门编号由高到低排列，再按员工工资由高到低排列。
+#9. 在employee表中，查询工资范围在800~2500之间的员工信息。
+#10. 在employee表中，查询到目前为止，工龄大于等于10年的员工信息。
+         (30分)
+
+
+
+
+
+1 在MySQL中分别创建表dept和employee，结构如下：
+
+create table dept(
+	d_no int(11) primary key not null auto_increment,
+	d_name varchar(50) not null ,
+	d_location varchar(100) not null
+);
+
+create table employee(
+	e_no int(11) primary key not null ,
+	e_name varchar(100) not null,
+	e_gender char(2) not null ,
+	dept_no int(11) not null ,
+	e_job varchar(100) not null ,
+	e_salary smallint(6) not null ,
+	hireDate date,
+
+	constraint  foreign key(dept_no) references dept(d_no)
+);
+
+2 在employee表中插入如下数据：
+在dept表中插入如下数据：
+
+(在employee设置了外键，要先插入dept的数据，否则employee插入会失败)
+
+insert into dept values (10, 'ACCOUNTING', 'ShangHai'),
+			(20, 'RESEARCH ', 'BeiJing '),
+			(30, 'SALES ', 'ShenZhen '),
+			(40, 'OPERATIONS ', 'FuJian ') ;
+
+
+insert into employee values (1001, 'SMITH', 'm',20, 'CLERK',800,'2005-11-12'),
+			(1002, 'ALLEN', 'f',30, 'SALESMAN', 1600,'2003-05-12'),
+			(1003, 'WARD', 'f',30, 'SALESMAN', 1250,'2003-05-12'),
+			(1004, 'JONES', 'm',20, 'MANAGER', 2975,'1998-05-18'),
+			(1005, 'MARTIN', 'm',30, 'SALESMAN', 1250,'2001-06-12'),
+			(1006, 'BLAKE', 'f',30, 'MANAGER', 2850,'1997-02-15'),
+			(1007, 'CLARK', 'm',10, 'MANAGER', 2450,'2002-09-12'),
+			(1008, 'SCOTT', 'm',20, 'ANALYST', 3000,'2003-05-12'),
+			(1009, 'KING', 'f',10, 'PRESIDENT', 5000,'1995-01-01'),
+			(1010, 'TURNER', 'f',30, 'SALESMAN', 1500,'1997-10-12'),
+ 			(1011, 'ADAMS', 'm',20, 'CLERK', 1100,'1999-10-05'),
+			(1012, 'JAMES', 'm',30, 'CLERK', 950,'2008-06-15');
+
+3.在employee表中，查询每个部门最高工资的员工信息。
+select *
+from employee
+where e_salary in (
+		select max(e_salary)
+		from employee
+		group by dept_no
+	) ;
+
+
+4 查询员工BLAKE所在部门和部门所在地。
+select dept.d_no , dept.d_name , dept.d_location
+from dept
+inner join employee
+on employee.dept_no = dept.d_no
+where employee.e_name = "BLAKE" ;
+
+
+
+5 使用连接查询，查询所有员工的部门和部门信息。
+
+select d.* , e.*
+from employee as e
+left join dept as d
+on e.dept_no = d.d_no ;
+
+
+
+6 在employee表中，计算不同部门的平均工资。
+select dept_no , avg(e_salary)
+from employee
+group by dept_no ;
+
+
+7 在employee表中，查询员工姓名以字母’A’或’S’开头的员工的信息。
+
+select *
+from employee
+where e_name like "A%" or e_name like "S%" ;
+
+
+
+
+
+8 在employee表中，将查询记录先按部门编号由高到低排列，再按员工工资由高到低排列。
+select *
+from employee as e
+order by e.dept_no desc , e.e_salary desc ;
+
+
+
+9 在employee表中，查询工资范围在800~2500之间的员工信息。
+select *
+from employee
+where e_salary between 800 and 2500 ;
+
+
+
+10 在employee表中，查询到目前为止，工龄大于等于10年的员工信息。
+select *
+from employee
+where now()- hireDate >= 10 ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

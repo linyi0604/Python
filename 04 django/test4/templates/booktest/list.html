@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{# 必须用这一句去引用过滤器 filters是我过滤器所在py文件的名字 #}
+{% load filters %}
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .red{
+            background-color: red;
+        }
+        .gold{
+            background-color: gold;
+        }
+    </style>
+</head>
+<body>
+<ul>
+{% for book in books %}
+    {#  使用过滤器  #}
+    {% if book.id|odd %}
+        <li class="red">
+            {{ book.id }}----{{ book.btitle }}----{{ book.bpub_date|date:'Y-m-d' }}
+        </li>
+    {% else %}
+        <li class="gold" >
+            {{ book.id }}----{{ book.btitle }}----{{ book.bpub_date|date:'Y-m-d' }}
+        </li>
+    {% endif %}
+{% endfor %}
+
+</ul>
+
+<ul>
+    {% for hero in heros %}
+        <li >{{ hero.id }}----{{ hero.hname }}</li>
+    {% endfor %}
+
+</ul>
+
+</body>
+</html>

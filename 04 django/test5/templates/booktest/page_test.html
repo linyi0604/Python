@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>地区分页</title>
+</head>
+<body>
+<h1>分页省份信息</h1>
+<hr>
+{# 列出本页所有数据 #}
+<ul>
+    {% for area in areas %}
+        <li>{{ area.id }}----{{ area.atitle }}</li>
+        {% empty %}
+        <li>没有省份</li>
+    {% endfor %}
+</ul>
+
+{#如果有上一页 就添加#}
+{% if areas.has_previous %}
+    <a href="/page_test{{ areas.previous_page_number }}">上一页</a>
+{% endif %}
+
+{# 添加页码 如果是当前页就不用a标签 #}
+{% for i in plist %}
+    {% if i == areas.number %}
+        {{ i }}
+    {% else %}
+        <a href="/page_test{{ i }}">{{ i }}</a>
+    {% endif %}
+{% endfor %}
+{# 如果有下一页就添加下一页 #}
+{% if areas.has_next %}
+    <a href="/page_test{{ areas.next_page_number }}">下一页</a>
+{% endif %}
+</body>
+</html>

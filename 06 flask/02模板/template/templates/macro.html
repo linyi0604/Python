@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flask macro</title>
+</head>
+<body>
+定义 宏 和调用 宏
+<br>
+{# 定义宏 #}
+{% macro input(type,value,size) %}
+    <input type="{{ type }}" name="" value="{{ value }}" size="{{ size }}">
+{% endmacro %}
+
+{# 调用宏 #}
+{{ input('text','登陆','60') }}
+<br>
+{{ input('password','注册','20') }}
+
+<br>
+
+引用外部宏
+<br>
+{% import 'macros.html' as f %}
+{{ f.fun() }}
+
+
+
+
+</body>
+</html>

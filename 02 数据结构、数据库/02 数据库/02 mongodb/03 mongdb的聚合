@@ -1,0 +1,146 @@
+聚合:
+    主要用于计算和统计等，类似sql种的sum() avg()
+    db.集合.aggregate( { 管道:{表达式} } )
+
+    常用的管道:
+        $group:将集合中的文档按照字段进行分组
+        $match:过滤数据，输出符合条件的文档
+        $project:修改文档的结构,重命名、增加、删除字段，创建结果,类似投影，指定字段显示结果
+        $sort:排序
+        $limit:限制返回文档条数
+        $skip:跳过指定数量的文档
+        $unwind:对列表类型字段内容拆分
+
+    常用表达式: $表达式:"$字段"
+        $sum:计算总数量，$sum:1 代表按照1倍进行统计总数量
+        $avg:计算平均值
+        $min:获取最小值
+        $max:获取最大值
+        $push:结果文档插入到一个数组给配合分组使用
+        $first:获取排序后第一个文档数据
+        $last:获取排序后最后一个文档数据
+
+
+
+
+    $group: {_id:"$字段"} 指定字段分组，id为null代表全部数据为一组
+        例如：统计男生、女生的人数
+        db.stu.aggregate(
+            {$group:{
+                _id:"$gender",  //按照gender进行排序
+                total:{$sum:1}  //自己设置一个字段total用于保存统计每个组的人数
+                            // $sum:1 代表按照一倍进行统计总数量
+            }}
+        )
+
+        _id:null 代表所有数据分为一组
+        例如: 求总人数和平均年龄
+        db.stu.aggregate(
+            {$group:{
+                _id:null,   //整个数据分为一组
+                total:{$sum:1},     //按照一倍统计总数量
+                avg_age:{$avg:"$age"}   //按照字段年龄求平均数
+            }}
+        )
+
+
+
+    $push: 透视数据，将符合分组条件的字段插入到结果列表当中，"$$ROOT"可以令整个文档插入列表
+        例如:按照性别统计姓名:
+        db.stu.aggregate(
+            {$group:{
+                _id:"$gender",      //按照性别进行分组
+                names:{$push:"$name"}   //将符合分组的name字段值插入 names的列表里
+            }}
+        )
+
+
+        例如: 按照性别，统计文档
+        db.stu.aggregate(
+            {$group:{
+                _id:"$gender",      //按照性别进行分组
+                info:{$push:"$$ROOT"}   //将符合分组的文档插入到info列表当中
+            }}
+        )
+
+    $match: 过滤数据，输出符合条件的文档
+        例如:查询年龄大于20的学生
+        db.stu.aggregate(
+            {$match:{age:{$gt:20}}} //年龄大于20
+        )
+
+        例如:查询年龄大于20的男生女生分别的人数。(多个管道进行并列)
+        db.stu.aggregate(
+            {$match:{age:{$gt:20}}}, //年龄大于20 筛选出符合条件的数据
+            {$group:{
+                _id:"$gender",  //按照性别分组
+                total:{$sum:1}    //求出总数量
+            }}
+        )
+
+    $project: 类似投影，指定字段进行显示结果
+        例如: 查询学生的姓名、年龄
+        db.stu.aggregate(
+            {$project:{
+                _id:0,
+                name:1, //指定为1代表显示，指定为0代表不显示
+                age:1
+            }}
+        )
+
+        例如:查询男女生，输出人数
+        db.stu.aggregate(
+            {$group:{       //按照性别分组后统计人数
+                _id:"$gender",
+                total:{$sum:1}
+            }},
+            {$project:{
+                _id:0,  //指定只输出总数 不输出_id
+                total:1
+            }}
+        )
+
+    $sort: 排序后输出，1为升序 -1为降序
+        例如: 查询学生信息，按年龄升序
+        db.stu.aggregate(
+            {$sort:{age:1}}
+        )
+
+        例如: 查询男女生的人数并按人数降序
+        db.stu.aggregate(
+            {$group:{       //按年龄排序求出总人数
+                _id:"$gender",
+                total:{$sum:1}
+            }},
+            {$sort:{total:-1}}  //按照total的降序排列
+        )
+
+    $skip和$limit:
+        $skip:num 越过前num条文档
+        $limit:num 显示num条文档
+        先skip再limit实现分页的功能
+
+        例如:查询3到7条(略过前2条，查询5条)
+        db.stu.aggregate(
+            {$skip:2},
+            {$limit:5}
+        )
+
+    $unwind:对文档中包含列表类型按照列表内元素个数数据进行拆分成多条
+        构造数据:db.t2.insert({_id:1,item:'t-shirt',size:['S','M','L']})
+        拆分: db.t2.aggregate( {$unwind:"$size"} )
+        结果:    { "_id" : 1, "item" : "t-shirt", "size" : "S" }
+                { "_id" : 1, "item" : "t-shirt", "size" : "M" }
+                { "_id" : 1, "item" : "t-shirt", "size" : "L" }
+
+        处理空数组、非数组、无字段、null情况:(按如上操作会丢失查询结果)
+        需要指定preserveNullAndEmptyArrays: true代表保留空文档，false代表不保留空文档
+        构造数据:db.t3.insert([
+                        { "_id" : 1, "item" : "a", "size": [ "S", "M", "L"] },
+                        { "_id" : 2, "item" : "b", "size" : [ ] },
+                        { "_id" : 3, "item" : "c", "size": "M" },
+                        { "_id" : 4, "item" : "d" },
+                        { "_id" : 5, "item" : "e", "size" : null }
+                    ])
+        丢数据的拆分: db.t3.aggregate({ $unwind:"$size" })
+        空的size仍然保留信息: db.t3.aggregate({ $unwind:"$size",preserveNullAndEmptyArrays:true })

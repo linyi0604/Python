@@ -1,0 +1,329 @@
+数据准备：
+    创建表：
+        create table students(
+            id int unsigned primary key auto_increment not null,
+            name varchar(20) default '',
+            age tinyint unsigned default 0,
+            height decimal(5,2),
+            gender enum('男','女','人妖','保密'),
+            cls_id int unsigned default 0,
+            isdelete bit default 0
+        );
+    创建数据：
+        insert into students values
+            (0,'韦少',18,180.00,2,1,0),
+            (0,'小月月',18,180.00,2,2,1),
+            (0,'彭于晏',29,185.00,1,1,0),
+            (0,'刘德华',59,175.00,1,2,1),
+            (0,'芙蓉',38,160.00,2,1,0),
+            (0,'凤姐',28,150.00,4,2,1),
+            (0,'王祖贤',18,172.00,2,1,1),
+            (0,'周杰伦',36,NULL,1,1,0),
+            (0,'程坤',27,181.00,1,2,0),
+            (0,'刘亦菲',25,166.00,2,2,0),
+            (0,'金星',33,162.00,3,3,1),
+            (0,'静香',12,180.00,2,4,0),
+            (0,'周杰',34,176.00,2,5,0);
+
+
+1 查询所有字段：
+    select * from 表名;
+    例如 select * from students;
+        -- 查询students表中的所有信息
+
+
+2 指定字段查询：
+    select 列1 , 列2 , ... , 列n from 表名;
+    例如 select students.id, students.name from students
+         -- 一般列为 数据库.表.列，数据库和表名可以省略。多表查询的时候表名不能省略
+
+    可以通过 as 关键字对表起别名：
+    例如: select s.id , s.name from students as s;
+    也可以列起别名:
+    例如 select id as 编号, name as 姓名 from students;
+
+    用as起别名的时候 as可以省略，列名 或 表名 跟别名:
+    例如: select s.id 编号, s.name 姓名 from students s;
+
+3 消除重复行查询（去重） distinct :
+    select distinct 列1,列2 from 表名;
+    例如： select distinct id , name , gender from students;
+        -- 当查询多个列的时候，会把每条数据作为一个整体去去重复。
+
+
+4 条件 where
+    select * from 表名 where 条件;
+    例如 select * from students where id = 1;
+
+    where后面支持多种运算符：比较运算符、逻辑运算符、模糊查询、范围查询、空判断
+
+    4.1 比较运算符：等于=   等于>   小于<   大于等于>=   小于等于<=    不等于!=或<>
+        例如：
+        select * from students where id = 1;
+            -- 在students表中搜索id是1的。
+        select * from students where id >5 ;
+            -- 在students表中查询id比5大的。
+        select * from students where name != "黄蓉";
+            -- 查询名字 不是黄蓉的信息。
+
+
+    4.2 逻辑运算符: and or not
+        select * from students where id > 3 and gender = 0;
+            -- 在students表中 查询id比3大的 并且 性别是第一个枚举对象的。
+
+    4.3 模糊查询: like、rlike
+        % 表示任意多个任意字符
+        _ 表示一个任意字符
+        例如：
+            select * from students where name like "黄%";
+                -- 查询姓黄的人
+
+            select * from students where name like "黄_";
+                -- 查询名字是两个字 并且姓黄的人
+
+            select * from students where name like "%黄" ;
+                -- 查询名字中含有黄字的人
+            select * from students where name rlike "^黄.*";
+                -- rlike 后面跟正则表达式。
+    4.4 范围查询:
+        in 表示在一个非连续的范围内：
+            select * from students where id in (1,3,8);
+                -- 查询id 是 1或者3或者8的所有人
+
+            select * from students where id between 3 and 8;
+                -- 查询编号3到8的人
+
+            select * from students where id between 3 and 8 and gender =1 ;
+                -- 查询编号3到8的男生。
+
+        空判断 null:
+            判断是不是空 is null
+            select * from students where height is null;
+                -- 查询没有填写身高的人。
+
+            判断非空 is not null
+            select * from students where height is not null;
+                -- 查询填身高的人的信息
+
+    优先级:
+        优先级由高到低为： 小括号> not > 比较运算符，逻辑运算符
+        and 比 or先运算，如果同时出现并希望先算or 就要用小括号。
+
+5 排序:
+    select * from 表名
+    order by 列1 asc|desc , 列2 asc|desc
+
+    1 先按照列1排序，列1相同的时候按照列2排序。
+    2 默认按照列值从校到大排序列
+    3 asc从小到大排列，升序
+    4 desc从大到小排序，降序
+
+    例如：
+
+    select * from students
+    where gender = 1
+    order by id desc;
+        -- 在students表中查询gender是1的 并且按照id的降序排列
+
+    select * from students
+    where isdelete = 0
+    order by name;
+        -- 在students表中没有删除的信息 按照name升序进行排序。
+
+6 聚合函数：
+    1 count(*) 查询总行数
+        select count(*) from students;
+            -- 查询students表中一共有多少行数据。
+    2 max(列) 查询该列的最大值
+        select max(age) from students;
+            -- 查询students中age的最大值
+    3 min(列) 查询该列中最小的值
+        select min(age) from students;
+            -- 查询students中age的最小数据
+    4 sum(列) 查询该列的数值总和
+        select sum(age) from students;
+            -- 查询students表中age的总和
+    5 avg(列) 查询该列的平均值
+        select avg(age) from students;
+            -- 查询students列中age的平均值
+
+7 分组
+    按照字段分组 表示此字段相同的数据会被放到一个组中
+    分组后 分组的依据列会显示在结果集中，其他列不会显示在结果集中
+    可以对分组后的数据进行统计，做聚合运算
+
+    select 列1 , 列2 ,聚合 ... from 表名 group by 列1,列2 [having 聚合条件] ;
+
+    例如：
+        select gender as 性别 ,count(*)
+        from students
+        group by gender;
+            -- 查询每个性别的总人数
+
+        select age as 年龄, count(*) as 数量
+        from students
+        group by age;
+            -- 查询每个年龄的人数
+
+    分组后的数据筛选：
+        select 列1,列2,聚合 ... from 表名
+        group by 列1,列2,列3...
+        having 列1,...聚合...
+            -- having后面的条件运算符与where的相同
+
+        例如：
+            select gender as 性别,count(*)
+            from students
+            group by gender
+            having gender = 1;
+                -- 查询男生的总人数、
+
+            select gender , avg(age) from students group by gender having avg(age)>3;
+                -- 查询平均年龄大于3的性别有哪些。
+
+    对比where 与 having
+        where 对from 后面 指定的表进行数据筛选，属于对原始数据的筛选
+        having 是对group by 的结果进行筛选
+
+8 分页 limit ：
+    select * from 表名
+    limit start , count
+        -- 略过前start调信息,展示count条信息
+        -- start可以省略，默认从0开始
+
+    事例：
+        限定每页显示m条数据,当前显示第n页,求总页数。
+        select * from 表名
+        limit (n-1)*m , m;
+
+9 连接查询：
+    mysql支持三种类型的连接查询：内连接、右外连接、左外连接。
+        select * from 表名
+        [inner|across|left|right] join 表2 on 表1.列 = 表2.列(条件)
+        inner|across 代表内连接
+        left|right 代表外连接
+
+    内连接：严格按照条件，两个表必须都严格符合条件。任何一个表不符合条件的都不能进入结果。
+        select students.* , classes.*
+        from students
+        [inner|across] join classes
+        on students.cls_id = classes.id;
+        -- 按照班级号相同把两张表内连接，后展示结果
+        -- 某个class.id 或者students.cls_id 如果在另一个表中没有对应的就不会被查出来
+
+    左外连接：右侧表符合条件的数据和左表全部数据拼接,右表找不到跟左表拼接的数据就用null占位。
+        select students.* , classes.*
+        from students
+        left [outer] join classes
+        on students.cls_id = classes.id;
+        -- 以class为主表，所有数据都显示，如果students中没有符合条件的 就用null占位
+
+    右外连接：左表符合条件的数据和右表全部拼接，左表找不到跟右表拼接的数据用null占位。
+        select students.* , classes.*
+        from students
+        right [outer] join classes
+        on students.cls_id = classes.id;
+        -- 以students为主表，所有数据都会显示。如果classes表中没有符合的数据，就用null占位。
+
+10 自关联：
+    有如下情况：设计省-市-区-县。。。的数据库的时候，
+        省: province: id  ptitle                 省编号 、 省名称
+        市: city:     id  ctitle     proid       市编号 、 市名称 和 所属省的编号
+        区:  area:    id  atitle     citid       区编号 、 区名称 和 所属市的编号
+
+    我们发现，一个省有多个市，一个市有多个区和县。这样创建三张表里面结构基本一样。
+    而且当进行多表操作的时候,难度实际上是非常大的。
+    所以这种情况经常用到自联结。
+
+    我们改变表结构：对于省市区只建一张表：
+    area: aid 、 atitle 、 pid
+         编号    名称    上级编号       对于省和直辖市 pid为null
+
+    这样我们想关联查询上下级数据的时候，需要用到自关联。
+    创建表：
+        create table area(
+            aid int primary key,    -- 自己的编号
+            atitle varchar(20),     -- 自己的名称
+            pid int                 -- 上级的编号
+        );
+
+    自关联语句：
+        select city.*
+        from area as city
+        inner join area as province
+        on city.pid = province.id;
+        where province.atitle = "山西省"
+            -- 查询山西省管辖的所有城市
+
+        select dis.*
+        from area as city
+        inner join area as dis
+        on dis.pid = city.id
+        where city.atitle = "广州市";
+            -- 查询广州市下辖的所有区
+
+11 子查询：
+    常用关键字：
+        in (): where 列 in () 括号中存在就符合条件
+        any|some (): where 列 = any() 括号中任意一个
+        all(): where 列 = all()   列匹配里面所有
+    在一个select语句中嵌套另一个select语句
+
+    子查询分为:
+        标量子查询：子查询返回一个数据（一行一列）
+        列子查询：子查询返回一个列(多行一列)
+        行子查询：子查询返回一个行(一行多列)
+        表级子查询：子查询返回一个表(多行多列)
+
+    标量子查询：
+        -- 查询全班大于平均年龄的学生
+        select *
+        from students
+        where students.age > (
+                select avg(age)
+                from students
+            )
+
+    列级子查询:
+        -- 查询班级名为python的所有学生信息
+        select *
+        from students
+        where students.cls_id in (
+            select id
+            from classes
+            where classes.name="python"
+        );
+
+    行级子查询:
+        -- 查询年龄和身高同时具备全班最大值的学生
+        select *
+        from students
+        where ( age , height ) in (
+                select max(age), max(height)
+                from students
+            );
+
+    表级子查询:
+        -- 查询学生与班级对应信息（表级子查询一定更要写别名）
+        select t.sname , t.cname from (
+            select s.name as sname , c.name as cname
+            from students as s inner join classes as c
+            on s.cls_id = c.id
+        )as t ;
+
+    any\some\all:任意\某个\全部
+        -- id 大于 任意一个 就是id大于最小值
+        select classes.name from classes where id > any(select cls_id from students);
+        -- 等于任意一个 等于 某一个 意义相同 和 in 类似
+        select classes.name from classes where id = any(select cls_id from students);
+        select classes.name from classes where id = some(select cls_id from students);
+
+        -- <> all 和 not in 结果一样，相当于不在里面。
+        select classes.name from classes where id <> all(select cls_id from students);
+
+
+    很多子查询可以避免，用表连接进行替代。
+    推荐使用多表 连接，语句清晰，查询速度也更快。
+
+
+

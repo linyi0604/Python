@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>flask form</title>
+</head>
+<body>
+普通表单:
+<br>
+<form method='post'>
+    <input type="text" name="username" placeholder='Username'>
+    <br>
+    <input type="password" name="password" placeholder='password'>
+    <br>
+    <input type="submit">
+</form>
+<hr>
+WTF表单:
+<form method="post">
+    {{ form.csrf_token() }}
+    {{ form.user.label }}:{{ form.user }}
+    <br>
+    {{ form.ps.label }}:{{ form.ps }}
+    <br>
+    {{ form.ps2.label }}:{{ form.ps2 }}
+    <br>
+    {{ form.submit }}
+    <br>
+    {% for info in get_flashed_messages() %}
+        {{ info }}<br>
+    {% endfor %}
+</form>
+
+
+
+</body>
+</html>

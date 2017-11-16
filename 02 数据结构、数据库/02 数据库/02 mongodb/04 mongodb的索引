@@ -1,0 +1,33 @@
+mongodb的索引:
+    在数据量超大的时候，能够极大的增快查询速率，但是会降低更新效率。
+
+建立索引:
+    db.集合.ensureIndex({属性:1}) //1代表升序 -1代表降序
+    db.集合.ensureIndex({属性1:1,属性2:1}) //联合索引
+
+查看文档所有索引:
+    db.集合.getIndexes()
+删除索引:
+    db.集合.dropIndex("索引名")
+
+
+
+
+1 创建大量数据
+    for(var i = 0;i<=100000;i++){
+        db.t1.insert({
+            _id:i,
+            name:"demo"+i,
+            age:i
+        })
+    }
+2 查找文档来看查询速度:
+    db.t1.find({name:'test10000'}).explain('executionStats')
+
+3 建立索引:
+    db.t1.ensureIndex({"name":1})
+4 查询索引字段:
+    db.t1.find({name:'test10000'}).explain('executionStats')
+
+
+可以看出通过索引进行搜索速度是提高了非常显著的。

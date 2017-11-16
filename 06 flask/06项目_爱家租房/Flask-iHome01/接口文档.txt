@@ -1,0 +1,163 @@
+1/发送短信
+请求方法:GET
+请求URL:/api/v1.0/smscode/<mobile>?text=image_code,id=image_code_id
+请求参数:
+参数名         是否必须        参数说明
+mobile          是           用户输入的注册手机号
+text            是           用户输入的图片验证码内容
+id              是           用户输入图片验证码编号
+返回结果:
+正确:
+{
+    errno=RET.OK,
+    errmsg="发送成功"
+}
+错误:
+{
+    errno=RET.THIRDERR,
+    errmsg="发送失败"
+}
+
+
+2 注册用户
+请求方法: post
+请求url: /api/v1.0/users
+请求参数:
+参数名称    是否必填    说明
+mobile      是        用户输入的注册手机号
+sms_code    是        用户输入的短信验证码
+password    是        用户密码
+
+返回结果:
+正确:
+{
+    errno:RET.OK,
+    errmsg:'OK'
+    data:user.to_dict()
+}
+错误:
+{
+    errno:RET.DBERR,
+    errmsg:'手机号存在'
+}
+
+3 用户登录
+请求url: /api/v1.0/sessions
+请求方法: post
+请求参数: mobile password
+参数      是否必须       参数说明
+mobile      是          用户输入的用户名信息
+password    是          用户密码
+返回结果:
+正确:
+{
+    errno = RET.ok,
+    errmsg = 'OK',
+    data = user.id
+}
+错误:
+{
+    errno=RET.DATAERR,
+    errmsg='用户名或密码错误'
+}
+
+4 获取用户信息
+请求url: /api/v1.0/user
+请求方法: get
+请求参数: user.id;user_id = g.user_id
+返回结果:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data = user.to_dict()
+}
+
+
+5 修改用户信息 修改用户名 修改头像
+请求url: /api/v1.0/user/name
+请求方法:PUT
+请求参数:
+参数      是否必需        说明
+name        是          新输入的用户名 nick_name
+返回结果:
+正确:
+{
+    errno = RET.OK,
+    errmsg='OK',
+    data = { 'name':name }
+}
+错误:
+{
+    errno = RET.DBERR,
+    errmsg='修改用户信息失败',
+}
+
+
+6 上传用户头像
+请求url: /api/v1.0/user/avatar
+请求方法:post
+请求参数:
+参数      是否必须    说明
+avatar     是       用户上传的头像图片
+返回:
+正确:
+{
+    errno = RET.OK
+    errmsg='ok'
+    data{'avatar_url':骑牛运外联域名+图片名称}
+}
+错误:
+{
+    errno = RET.THIRDERR,
+    errmsg='上传头像失败'
+}
+
+
+7 实名认证
+请求url: /api/v1.0/user/auth
+请求方法:POST
+请求参数
+参数      是否必须        参数说明
+real_name  是           真实姓名
+id_card     是           用户的身份证号码
+返回结果:
+{
+    errno = RET.OK
+    errmsg='ok'
+}
+
+8 获取用户实名信息
+请求url: /api/v1.0/user
+请求方法: get
+请求参数: user.id;user_id = g.user_id
+返回结果:
+{
+    errno=RET.OK,
+    errmsg='OK',
+    data = author.to_dict()
+}
+
+
+
+
+11 上传房屋图片
+请求url: /api/v1.0/houses/<house_id>/images
+请求方法: POST
+参数      是否必需        参数说明
+house_id    是           房屋id
+house_image 是           房屋图片文件
+返回结果:
+正确:
+{
+    errno:RET.OK,
+    errmsg:'OK',
+    data: 骑牛运外链域名 + 骑牛运返回的图片名称
+}
+错误:
+{
+    errno:RET.THIRDERR,
+    errmsg='上传图片错误'
+}
+
+
+

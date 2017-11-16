@@ -1,0 +1,253 @@
+linux环境下：安装mysql服务、终端命令：简单的使用数据库和备份恢复。
+
+1 SQL：
+    Structured Query Language
+    结构化查询语言。
+    运用sql语句，可以对关系型数据库进行操作。
+    目前常见的关系型数据库有：
+        MySQL
+        oracle
+        SQL Server
+        sqlite
+
+
+
+
+2 sql语句主要分为：
+    DQL：数据查询语言 select
+    DML：数据操作语言（增删改） insert、update、delete
+    TPL：事物处理语言  begin、transaction、commit、rollback
+    DCL: 数据控制语言 grant、revoke
+    DDL: 数据定义语言 create、drop
+    CCL: 指针控制语言 declare、cursor
+
+
+
+
+3 在linux系统中安装MySQL
+    3.1 安装服务器端:
+        服务器用于接收客户端的请求，执行sql语句和管理数据库
+
+        终端执行命令来安装mysql的服务器：
+            sudo apt-get install mysql-server
+
+        终端开启mysql服务器的服务：
+            sudo service mysql start
+
+        停止服务：
+            sudo service mysql stop
+
+        重启服务：
+            sudo service mysql restart
+
+    3.2 安装客户端：
+        终端命令：
+            sudo apt-get install mysql-client
+
+        查看帮助文档：
+            mysql --help
+
+        客户端连接mysql服务器：
+            mysql -u 用户名 -p 密码
+            或者： mysql -u 用户名 -p     等待提示密码
+
+        连接成功后退出连接：
+            quit；
+            或者 exit；
+
+
+4 linux下mysql命令行基本操作：
+    4.1 登录：
+        登录mysql：   mysql -u 用户名 -p 密码
+        退出登录：    quit; 或者 exit;
+
+        登陆后：
+            查看版本： select version();
+            查看当前sql服务器时间： select now();
+
+        修改输入提示符：
+            默认的输入提示符为 mysql>
+            prompt \D   修改为当前完整时间
+            prompt \d   修改为当前数据库名称
+            prompt \u   使用用户名
+            prompt \h   使用主机名称
+          也可以自己指定：
+            prompt python>    将输入提示符修改为 python>
+
+
+    4.2 数据库层次操作(确保登录客户端)：
+
+        查看所有数据库：
+            show databases;
+
+        使用数据库：
+            use 数据库名;
+
+        查看当前使用数据库：
+            select database();
+
+        创建数据库：
+            create database 数据库名;
+
+        删除数据库：
+            drop database 数据库名;
+
+        查看当前已有数据库的创建语句:
+            show create database 数据库名;
+
+    4.3 数据表层次操作(确保使用数据库):
+        查看当前库中所有表：
+            show tables;
+
+        查看表结构：
+            desc 表名;
+
+        创建表：[]内的内容可以没有 也可以有
+               create table 表名(
+                    字段1 类型 [约束],
+                    字段2 类型 [约束],
+                    字段3 类型 [约束],
+                    字段4 类型,
+                    字段5 类型
+                    [, 主键或外键约束 ]
+               );
+            例如： 创建一个表students，里面包括id，name，gender
+                create table students(
+                    id int unsigned primary key auto_increment,    -- id 无符号整数 主键 自动增长
+                    name varchar(20) not null default "",      -- name 可变长度字符串 非空 默认""
+                    gender enum("男", "女","女博士","保密") default "保密"    -- gender 枚举类型 只能是这几个值 默认保密
+                );
+
+        查看已有表的创建语句：
+            show create table 表名;
+
+        修改表：
+            添加字段：
+                alter table 表名 add 字段名 类型;
+
+            修改字段名：
+                alter table 表名 change 原字段 新字段名 约束;
+
+            修改字段类型和约束:
+                alter table 表名 modify 字段名 类型 约束;
+
+            删除字段：
+                alter table 表名 drop 字段名;
+
+            删除表:
+                drop table 表名;
+
+    4.4 表的简单增删改查语句：
+        增加数据：[] 内的内容可以省略
+            全插入：
+                insert [into] 表名 values( 值1, 值2 ,值3.... ,值n ); -- 要求值和字段一一对应，所有字段都被赋值
+               也可以插入多条数据，values之间用,隔开：
+                insert [into] 表名 values( 值1, 值2 ,值3.... ,值n ),( 值1, 值2 ,值3.... ,值n );
+
+            部分插入：
+               insert [into] 表名 (列1,列2) values( 值1,值2 ); -- 给指定的字段添加值，值和字段一一对应
+              也可以插入多条数据：
+               insert [into] 表名 (列1,列2) values( 值1,值2 ),( 值1,值2 ),( 值1,值2 );
+
+            注意：对于自动增长的字段，可以用0 或者null 占位，自动帮我们维护
+                 对于enum类型数据，可以用数字占位，自动帮我们选择值
+
+        查询数据：
+            查询所有列：
+                select * from 表名;
+
+            查询指定列：
+                select 列1,列2,列3 from 表名;
+
+            按条件查询：
+                select 列1,列2 from 表名 where 条件;
+                比如：
+                    select * from students where id = 1; -- 查询students表中id是1的数据
+
+        修改数据：
+            修改表中所有数据：
+                update 表名 set 列1 = 值1 , 列2 = 值2 ... ;
+
+            指定修改数据：
+                update 表名 set 列1 = 值1 , 列2 = 值2 ... where 条件 ;
+              例如：
+                update students set name = "哈哈" where id = 1;
+                修改students表中id是1 的 数据 name改为哈哈
+
+        删除数据：
+            清空表内数据：
+                delete from 表名;
+
+            删除部分数据：
+                delete from 表名 where 条件;
+              例如：
+                delete from students where id = 1;
+                删除students表中 id 为1 的数据
+
+            逻辑删除(本质是修改):
+                update 表名 set isdelete = 1 where 条件
+
+
+    4.5 数据库备份和恢复(终端命令，不是mysql命令)：
+        备份：
+            mysqldump -u root -p 数据库名 > 备份文件名称.sql;
+            -- 会给数据库中的表添加锁：写锁、排他锁。当我在操作的时候，不允许其他线程或进程操作。
+            -- 读取的时候会给数据库添加读取锁、共享锁。
+        恢复：
+            连接mysql，创建一个新的数据库后退出连接执行如下命令：
+            mysql -u root -p 新数据库名 < 备份文件名.sql
+
+
+5 mysql中的数据类型和约束
+    数据类型：
+        整数： int 、 bit
+        小数： decimal(5,2) 共存5位，小数占2位
+        字符串： varchar(20) 可变长度字符串，最多能存20位
+                char(5) 固定长度字符串，不足5位自动补空格
+                text 大文本 字符大于4000时推荐使用
+        日期时间：date、time、datetime
+        枚举类型(enum)
+
+        对于图片 音频 视频等文件 不存处在数据库中，而是上传到某个服务器，然后在标中存这个文件的保存路径
+
+
+        数值类型(常用)：
+        类型  	字节大小	有符号范围(Signed)                           无符号范围(Unsigned)
+        TINYINT	    1	-128 ~ 127	                                0 ~ 255
+        SAMLLINT	2	-32768 ~ 32767	                            0 ~ 65535
+        MEDIUMINT	3	-8388608 ~ 8388607	                        0 ~ 16777215
+        INT/INTEGER	4	-2147483648 ~2147483647     	            0 ~ 4294967295
+        BIGINT	    8	-9223372036854775808 ~ 9223372036854775807	0 ~ 18446744073709551615
+
+        字符串：
+        类型	    字节大小	    示例
+        CHAR	0-255	    类型:char(3) 输入 'ab', 实际存储为'ab ', 输入'abcd' 会报长度过长的错误
+        VARCHAR	0-255	    类型:varchar(3) 输 'ab',实际存储为'ab', 输入'abcd',会报长度过长的错误
+        TEXT	0-65535	    大文本
+
+        日期时间类型：
+        类型          字节大小	示例
+        DATE	        4	    '2020-01-01'
+        TIME	        3	    '12:29:59'
+        DATETIME	    8	    '2020-01-01 12:29:59'
+        YEAR	        1	    '2017'
+        TIMESTAMP	    4	    '1970-01-01 00:00:01' UTC ~ '2038-01-01 00:00:01' UTC
+
+    约束：
+        主键： primary key
+        非空： not null
+        唯一： unique
+        默认： default
+        外键： foreign key
+
+
+
+
+
+
+
+
+
+
+
+

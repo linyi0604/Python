@@ -1,0 +1,28 @@
+post与get请求：
+    post请求的数据在请求体里面
+    get请求的数据在url后面追加，get请求没有请求体
+
+    发送post：
+        requests.post(url,headers,data)
+
+使用代理：
+    为什么爬虫要使用代理：
+        1 让服务器以为不是同一个客户端在请求
+        2 防止我们的真实地址被泄露，防止被追究
+
+
+cookies和session：
+    cookie是客户端浏览器上，session存放在服务器上
+    cookie不是很安全，别人可以分析cookie并进行欺骗
+    session会在服务器上，访问增多会比较占用资源
+    cookie不超过4k 一个站点最多保存20个cookie
+    session没有数量限制
+
+爬虫处理cookie和session
+    带上cookie session 能够请求到登录之后的页面
+    带上cookie session 容易被服务器识别唯一用户
+
+    尽量不用cookie
+
+    需要登陆之后页面 不得不带上cookie
+

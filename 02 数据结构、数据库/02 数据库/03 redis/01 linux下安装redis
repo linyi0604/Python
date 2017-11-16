@@ -1,0 +1,104 @@
+linux下安装 配置 redis数据库
+
+通过终端命令安装（推荐）：
+
+1 确保更新源服务器能正常使用
+
+　　如果没有更换更新源服务器，那么可能一直都下不了软件。欢迎参考我之前的博文来更换成国内的镜像服务器http://www.cnblogs.com/Lin-Yi/p/7072748.html
+
+2 终端执行 安装redis服务
+
+　　sudo apt-get install redis-server
+
+3 安装成功后 服务器的命令
+
+　　开启服务器 sudo service redis start
+
+　　关闭服务器 sudo service redis stop
+
+　　重启服务器 sudo service redis restart
+
+4 客户端命令
+
+　　连接服务器 redis-cli
+
+　　测试是否连通 ping  如果街道返回pong，则连接成功
+
+
+
+自己下载安装包安装:
+
+1 下载：打开https://redis.io/，推荐下载稳定版本(stable)
+
+2 step1:解压:  　　
+
+　　tar zxvf redis-3.2.5.tar.gz
+
+3 复制，放到usr/local目录下:　　
+
+　　sudo mv -r redis-3.2.5/* /usr/local/redis/
+
+4 进入redis目录:　　
+
+　　cd /usr/local/redis/
+
+5 生成:　　
+
+　　sudo make
+
+6:测试,这段运行时间会较长:
+
+　　sudo make test
+
+7 安装,将redis的命令安装到/usr/bin/目录
+
+　　sudo make install
+
+8 配置文件，移动到/etc/目录下
+
+配置文件目录为/usr/local/redis/redis.conf
+
+　　sudo cp /usr/local/redis/redis.conf /etc/redis/
+
+　　
+
+
+
+
+
+配置文件:
+
+1 绑定ip：如果需要远程访问，可将此行注释，或绑定一个真实ip
+
+　　bind 127.0.0.1
+
+2 端口，默认为6379
+
+　　port 6379
+
+3 是否以守护进程运行
+
+　　如果以守护进程运行，则不会在命令行阻塞，类似于服务
+
+　　如果以非守护进程运行，则当前终端被阻塞
+
+　　设置为yes表示守护进程，设置为no表示非守护进程
+
+　　推荐设置为yes
+
+　　daemonize yes
+4 数据文件
+
+　　dbfilename dump.rdb
+
+5 数据文件存储路径
+
+　　dir /var/lib/redis
+
+6 日志文件
+
+　　logfile /var/log/redis/redis-server.log
+
+7 数据库，默认有16个
+
+　　database 16

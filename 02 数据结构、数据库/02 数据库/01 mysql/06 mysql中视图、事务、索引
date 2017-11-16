@@ -1,0 +1,144 @@
+视图:
+    对于一个sql查询，如果发生了修改，就需要修改sql语句。
+    我们可以通过定义视图来解决问题。改变需求之后就改变视图。
+    视图是对查询的封装
+
+    定义视图： create view 视图名称 as select语句;
+        例如：定义视图 查询所有学生对应的成绩。
+            create view v_stu_score as
+            select students.* , scores.score
+            from students inner join scores
+            on scores.stuid = sudents.id;
+
+    查看视图:查看表会把视图也列出来
+        show tables;
+
+    删除视图: drop view 视图名称;
+        例如：drop view v_stu;
+
+    使用： 视图的用途就是查询。
+        select * from v_stu_score;
+
+
+
+
+事务:
+
+1 为什么要有事务
+    事务广泛的运用于订单系统、银行系统等多种场景
+    例如：A用户和B用户是银行的储户，现在A要给B转账500元，那么需要做以下几件事：
+    检查A的账户余额>500元；
+    A 账户中扣除500元;
+    B 账户中增加500元;
+    正常的流程走下来，A账户扣了500，B账户加了500，皆大欢喜。
+    那如果A账户扣了钱之后，系统出故障了呢？A白白损失了500，而B也没有收到本该属于他的500。
+    以上的案例中，隐藏着一个前提条件：A扣钱和B加钱，要么同时成功，要么同时失败。事务的需求就在于此
+
+
+    事务(Transaction)是并发控制的基本单位。所谓事务,它是一个操作序列，这些操作要么都执行，要么都不执行，它是一个不可分割的工作单位。
+    例如，银行转帐工作：从一个帐号扣款并使另一个帐号增款，这两个操作要么都执行，要么都不执行。
+    所以，应该把他们看成一个事务。事务是数据库维护数据一致性的单位，在每个事务结束时，都能保持数据一致性
+
+
+2 事务四大特性(简称ACID):
+    原子性(Atomicity)：事务中的全部操作在数据库中是不可分割的，要么全部完成，要么均不执行
+    一致性(Consistency)：几个并行执行的事务，其执行结果必须与按某一顺序串行执行的结果相一致
+    隔离性(Isolation)：事务的执行不受其他事务的干扰，事务执行的中间结果对其他事务必须是透明的
+    持久性(Durability)：对于任意已提交事务，系统必须保证该事务对数据库的改变不被丢失，即使数据库出现故障
+
+3 事务的使用:
+    只有innodb引擎才支持使用事务
+    查看表的创建语句可以看到 engine = innodb
+    show create table students;
+
+    修改数据库的命令都会出发事务，并且执行结束会提交。包括 insert、update 和 delete
+
+    开启事务: 开启事务后 变更会维护本地缓存当中，不修改真实的库表
+        begin;
+    提交事务: 提交后 会将本地缓存中的临时表变化提交给真实表做出修改
+        commit;
+    回滚事务: 如果提交失败 或者事务执行到一半发生异常 可以回滚，放弃内存当中改变的临时结果。
+        rollback;
+
+
+    例如：
+    begin; -- 开启事务
+    insert into classes (name) values ( "haha" );
+
+    -- begin后执行了修改语句，此时执行select能看到修改后的数据表，是在我们内存当中的临时表。
+    -- rollback; 如果执行回滚，代表放弃之前的修改，实际上真实表没有任何变化。
+    commit; -- 提交事务，代表我刚刚做出的修改更改到真实表当中。
+
+
+
+
+
+
+索引:
+    在实际当中使用数据库，绝大多数的操作都是在查询数据。
+    当数据库中数据库中数据量非常大的时候，查询速度就会很慢。
+    索引是优化查询速度的方案。
+
+    主键和唯一索引都是索引，可以提高查询速度。索引会单独创建一个目录，对应数据的位置。
+    索引分单列索引和组合索引：
+        单列索引，索引只包含一列数据。一张表可以有多个单列索引。
+        多列索引，一个索引包含多个列。
+
+    索引实际上是mysql服务器为了一个平衡二叉树。当我们按照索引查找实际上执行了二分查找。
+
+    语法：
+        查看索引: show index from 表名;
+
+        创建索引: create index 索引名 on 表名( 字段名称(长度) );
+            如果指定字段是字符串，需要指定长度。建议长度与定义字段长度一直。
+            如果不是字符串 可以不填写长度
+
+        删除索引: drop index 索引名 on 表名;
+
+    缺点:
+        虽然索引大大提高查询速度，但会降低更新表的效率。每次更新表，sql还需要对索引进行维护。
+        建立索引会占用磁盘空间的索引文件。
+
+    索引查询时间测试:
+        1 创建一个测试表:
+            create table test_index(
+                id int primary key auto_increment;
+                title varchar(10)
+              );
+        2 插入十万条数据
+            创建存储过程:
+                delimiter //
+                create procedure pro_test()
+                begin
+                declare i int default 0;
+                while i < 1000000 do
+                    insert into test_index value( 0 , concat("test",i) );
+                    i += 1;
+                end while;
+                end
+                //
+
+                delimiter ;
+
+
+            调用存储过程:
+                call pro_test();
+
+        3 开启运行时间监控
+            set profiling = 1;
+
+        4 查找数据
+            select * from test_index where id = 100000
+            select * from test_index where title = "test1000000";
+          查看执行时间: show profiles;
+            -- 可以看出，主键是自动维护一个索引的，查询主键花费时间明显少特别多。
+
+        5 创建一个索引后再查询：
+            create index index_test on test_index( title varchar(10) );
+
+            select * from test_index where title = "test1000000";
+            show profiles;
+
+            可以看出 添加索引之后明显时间降低。
+
+

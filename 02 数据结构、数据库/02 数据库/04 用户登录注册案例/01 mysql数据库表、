@@ -1,0 +1,17 @@
+设计用户表py_user结构如下:
+    id
+    uname
+    upwd
+    is_delete
+    密码要进行加密，不能存储明文密码
+        如果使用md5加密 则密码32个字符
+        如果使用sha1加密 则密码40个字符
+    这里我们使用sha1加密
+
+创建数据库表：
+create table py_users(
+    id int unsigned auto_increment not null primary key,
+    uname varchar(20) not null,
+    upwd char(40) not null,
+    is_delete bit not null default 0
+);

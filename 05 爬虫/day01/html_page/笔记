@@ -1,0 +1,36 @@
+爬虫的定义：
+    模拟浏览器和客户端发送请求并接受响应
+
+爬虫的流程：
+    1 获取url_lib
+    2 遍历url_lib 发送请求，获取响应内容
+    3 提取数据存储到本地，提取url地址 继续爬取
+
+User-Agent:
+    在报文头中，客户端浏览器的身份
+
+cookies：
+    有些网站需要登录，可以通过cookies检测程序是不是爬虫
+
+字符串转化：
+    bytes = string.encode()
+    string = bytes.decode()
+
+    设置response.content.decode(字符集) 得到数据
+    或者 先设置response.encoding()  再 response.text
+
+发送请求：
+    报文头： headers
+    参数： params
+    地址： url
+    requests.get(url,headers,params)
+    requests.post(url,headers,params)
+
+响应：
+    response.request.url 请求的url
+    response.url    响应的url
+    response.encoding(字符集) 设置字符集
+    response.text 拿回来的文字(解码不一定争取)
+    response.content.decode() 拿到文字
+
+

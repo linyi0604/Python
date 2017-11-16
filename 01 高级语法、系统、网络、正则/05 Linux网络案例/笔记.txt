@@ -1,0 +1,72 @@
+1 因特网是基于阿帕网发展起来的
+2 上百度 是因特网或万维网http服务
+3 传文件 ftp是因特网的服务
+4 发右键 icmp是因特网的服务
+
+
+5 url：统一资源定位器
+    协议://ip(或者域名)：端口/路径/文件名?key=value(查询)#锚点
+    http://www.baidu.com:80/haha/index.html?name=张三#top
+    http协议
+    www.baidu.com  域名
+    80 端口  http服务默认的端口就是80 可以省略
+    /haha/index.html   文件路径
+    ?name = 张三  查询条件
+    #top        锚点  从页面哪个位置显示
+
+
+二、
+    1 http：超文本传输协议，是一种应用层协议。
+        http基于tcp协议
+        tcp基于ip协议
+
+
+    应用层： http ftp smtp https
+    传输层： tcp udp arp rarp icmp igmp
+    网络层： ip
+    网络接口层：
+
+
+    2 请求报文的格式：
+    方法 路径 版本                        请求行
+    header_name:header_value\r\n        请求头
+    header_name:header_value\r\n
+                                        空行
+    requst_body                         请求体
+
+
+
+
+    例如：
+
+
+    GET(方法) /index2.html(URL) HTTP/1.1(协议版本)  请求行 request line
+    Host(主机): ip(ip地址)
+    Connection(连接方式):keep-alive(长连接：表示连接上就不断开1.1版本之后默认为长连接；1.0版本支持长连接但是默认是短连接)
+    Cache-Control(缓存):max-age=0
+    User-Agent(浏览器用户身份，web看是哪个浏览器版本 返回不同样式的页面):Mozilla/5.0
+    Accept(浏览器能够支持解读的文件有哪些类型):txt/xml,application/xhtml+xml,application/xml;1q=0
+    Accept-Encoding(浏览器能支持解析的压缩方式):gzip, deflate
+    Accept-Language(浏览器能支持的语言):zh-CN
+
+
+
+
+    请求头  发送请求时候用的
+    响应头部 服务器返回数据时候
+    通用头部： 服务器返回和客户端都可以用
+    以get方式提交 没有响应体
+
+    响应报文格式：
+    版本 状态码 说明                       响应状态行
+    response_name:header_value           请求头
+                                         空行
+    response_body                        请求体
+
+
+    4 状态码
+        2xx 表示成功接受  如 200 OK
+        3xx 重定向 需要进一步的操作    如302 Found 之前缓存有数据 服务器有更新，所以重新定向提示我们获取到更新的资源
+        4xx 客户端错误   例如 404 Not Found
+        5xx 服务器错误   例如 503 Service Unavailable
+
